@@ -1,0 +1,80 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import BaseHead, { type Props as HeadProps } from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Nav from '../components/Nav.astro';
+
+export type Props = HeadProps & { showHeader?: boolean };
+
+const { showHeader = true, ...head } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="wrap-break-words antialiased">
+    <head>
+        <BaseHead {...head} />
+        <script>
+            if (localStorage.theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        </script>
+        <ClientRouter />
+        <script is:inline src="/theme-toggle.js"></script>
+    </head>
+    <body class="bg-main text-main">
+        <div class="flex min-h-screen flex-col px-4 md:px-8">
+            <Nav />
+            {showHeader && <Header />}
+            <main class="mx-auto w-full max-w-3xl grow">
+                <slot />
+            </main>
+            <Footer />
+        </div>
+
+        <button
+            id="to-top-btn"
+            aria-label="Back to Top"
+            class="fixed bottom-8 right-8 z-50 hidden rounded-full border border-current bg-[var(--bg-main)] p-3 shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none opacity-0 translate-y-10"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+        </button>
+
+        <script>
+            document.addEventListener('astro:page-load', () => {
+                const toTopBtn = document.getElementById('to-top-btn');
+                
+                if (toTopBtn) {
+                    // Logic to show/hide button on scroll
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 300) {
+                            toTopBtn.classList.remove('hidden');
+                            // Small delay to ensure 'hidden' is removed before animating opacity
+                            requestAnimationFrame(() => {
+                                toTopBtn.classList.remove('opacity-0', 'translate-y-10');
+                            });
+                        } else {
+                            toTopBtn.classList.add('opacity-0', 'translate-y-10');
+                            // Wait for transition (300ms) before hiding element completely
+                            setTimeout(() => {
+                                if (window.scrollY <= 300) {
+                                    toTopBtn.classList.add('hidden');
+                                }
+                            }, 300);
+                        }
+                    });
+
+                    // Logic to scroll to top on click
+                    toTopBtn.addEventListener('click', () => {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

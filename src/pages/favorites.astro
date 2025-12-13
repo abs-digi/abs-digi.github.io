@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "My Favorites";
+const description = "A curated list of websites, tools, and pages I enjoy.";
+
+// EDIT HERE: Add your own categories and links
+const bookmarks = [
+    {
+        category: "News & Tech",
+        links: [
+            { title: "Hacker News", url: "https://news.ycombinator.com", desc: "Tech news aggregator." },
+            { title: "The Verge", url: "https://www.theverge.com", desc: "Technology news and reviews." },
+            { title: "Smashing Magazine", url: "https://www.smashingmagazine.com", desc: "Web design and development." }
+        ]
+    },
+    {
+        category: "Inspiration",
+        links: [
+            { title: "Awwwards", url: "https://www.awwwards.com", desc: "Website design inspiration." },
+            { title: "Dribbble", url: "https://dribbble.com", desc: "Design portfolio showcase." }
+        ]
+    },
+    {
+        category: "Useful Tools",
+        links: [
+            { title: "MDN Web Docs", url: "https://developer.mozilla.org", desc: "Resources for developers." },
+            { title: "Squoosh", url: "https://squoosh.app", desc: "Image compression tool." }
+        ]
+    },
+    {
+        category: "News & Tech",
+        links: [
+            { title: "Hacker News", url: "https://news.ycombinator.com", desc: "Tech news aggregator." },
+            { title: "The Verge", url: "https://www.theverge.com", desc: "Technology news and reviews." },
+            { title: "Smashing Magazine", url: "https://www.smashingmagazine.com", desc: "Web design and development." }
+        ]
+    },
+    {
+        category: "Inspiration",
+        links: [
+            { title: "Awwwards", url: "https://www.awwwards.com", desc: "Website design inspiration." },
+            { title: "Dribbble", url: "https://dribbble.com", desc: "Design portfolio showcase." }
+        ]
+    },
+    {
+        category: "Useful Tools",
+        links: [
+            { title: "MDN Web Docs", url: "https://developer.mozilla.org", desc: "Resources for developers." },
+            { title: "Squoosh", url: "https://squoosh.app", desc: "Image compression tool." }
+        ]
+    },
+    
+];
+---
+
+<BaseLayout title={title} description={description} showHeader={true}>
+    <section class="mx-auto max-w-3xl mb-16 sm:mb-24">
+        <h1 class="mb-8 font-serif text-3xl italic sm:mb-12 sm:text-5xl">{title}</h1>
+        
+        <div class="space-y-12">
+            {bookmarks.map((section) => (
+                <div class="bookmark-category">
+                    <h2 class="mb-6 font-serif text-xl font-bold italic border-b border-[var(--border-main)] pb-2">
+                        {section.category}
+                    </h2>
+                    <ul class="grid gap-4 sm:grid-cols-2">
+                        {section.links.map((link) => (
+                            <li>
+                                <a href={link.url} target="_blank" rel="noopener noreferrer" class="group block h-full p-4 border border-[var(--border-main)] hover:bg-[var(--text-main)] hover:text-[var(--bg-main)] transition-colors duration-200">
+                                    <div class="font-bold mb-1 group-hover:underline decoration-dashed underline-offset-4">
+                                        {link.title} ↗
+                                    </div>
+                                    {link.desc && (
+                                        <div class="text-sm opacity-80 leading-snug">
+                                            {link.desc}
+                                        </div>
+                                    )}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    </section>
+</BaseLayout>
