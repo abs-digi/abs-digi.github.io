@@ -1,22 +1,17 @@
 ---
-title: 'Linux & ProxMox Commands'
+title: 'Getting Files to Build in Github'
 description: Troubleshooting
-publishDate: 'Dec 12 2025'
+publishDate: 'Dec 13 2025'
+isFeatured: true
 ---
 
 Create a new folder path in your project: .github/workflows/ (Note the dot at the start of .github)
 
-    Create a new file inside that folder named deploy.yml.
+Create a new file inside that folder named deploy.yml.
 
-    Paste this code into deploy.yml:
+Paste this code into deploy.yml:
 
-
-
-    YAML
-
-
-    ---
-
+```yaml
 name: Deploy to GitHub Pages
 
 on:
@@ -60,27 +55,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-
-
----
-
-
-
-
-        Push this new file to GitHub:
-Bash
-
-git add .
-git commit -m "Add deploy workflow"
-git push
-
-Configure GitHub Settings:
-
-    Go to your repository on GitHub.
-
-    Click Settings (top tab).
-
-    Click Pages (sidebar on the left).
-
-    Under Build and deployment > Source, select GitHub Actions. (It might be set to "Deploy from a branch" by default).
