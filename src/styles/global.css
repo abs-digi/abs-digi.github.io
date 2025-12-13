@@ -96,3 +96,19 @@ html.dark {
         @apply font-serif font-normal italic border-none pl-0 text-[1.375em] leading-snug sm:text-[1.66667em];
     }
 }
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* ... existing code ... */
+
+/* OPTIONAL: Digital Garden Cursor */
+/* This changes the cursor to a seedling when hovering over links */
+a:hover {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text x='0' y='24' font-size='24'>🌱</text></svg>") 16 16, pointer;
+}

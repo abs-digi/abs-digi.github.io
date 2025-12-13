@@ -80,7 +80,8 @@ const siteConfig: SiteConfig = {
     ],
     hero: {
         title: 'Hi There & Welcome to My Corner of the Web!',
-        text: "I",
+        // CHANGE THIS LINE:
+        text: "Welcome to my digital garden. 🌿 I plant ideas here, water them with code, and watch them grow.",
         image: {
             src: hero,
             alt: 'A person sitting at a desk in front of a computer'
