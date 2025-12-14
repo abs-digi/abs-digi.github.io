@@ -1,8 +1,11 @@
 ---
 title: 'My First Digital Garden Note'
-description: This is a short summary that appears on the main list.
+description: Planting the Garden.
 publishDate: 'Dec 08 2025'
 isFeatured: true
+tags:
+  - Garden
+  - Update
 ---
 
 # My First Note

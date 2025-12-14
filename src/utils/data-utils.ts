@@ -1,11 +1,16 @@
 import { type CollectionEntry } from 'astro:content';
 import { slugify } from './common-utils';
 
-export function sortItemsByDateDesc(itemA: CollectionEntry<'blog' | 'projects'>, itemB: CollectionEntry<'blog' | 'projects'>) {
+// Add this type union
+type TaggedPost = CollectionEntry<'blog'> | CollectionEntry<'projects'>;
+
+// Update function signature to use TaggedPost
+export function sortItemsByDateDesc(itemA: TaggedPost, itemB: TaggedPost) {
     return new Date(itemB.data.publishDate).getTime() - new Date(itemA.data.publishDate).getTime();
 }
 
-export function getAllTags(posts: CollectionEntry<'blog'>[]) {
+// Update function signature to use TaggedPost[]
+export function getAllTags(posts: TaggedPost[]) {
     const tags: string[] = [...new Set(posts.flatMap((post) => post.data.tags || []).filter(Boolean))];
     return tags
         .map((tag) => {
@@ -19,7 +24,8 @@ export function getAllTags(posts: CollectionEntry<'blog'>[]) {
         });
 }
 
-export function getPostsByTag(posts: CollectionEntry<'blog'>[], tagId: string) {
-    const filteredPosts: CollectionEntry<'blog'>[] = posts.filter((post) => (post.data.tags || []).map((tag) => slugify(tag)).includes(tagId));
+// Update function signature to use TaggedPost[]
+export function getPostsByTag(posts: TaggedPost[], tagId: string) {
+    const filteredPosts: TaggedPost[] = posts.filter((post) => (post.data.tags || []).map((tag) => slugify(tag)).includes(tagId));
     return filteredPosts;
 }

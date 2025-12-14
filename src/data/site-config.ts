@@ -1,15 +1,17 @@
-import avatar from '../assets/images/avatar.jpg';
-import hero from '../assets/images/hero.jpg';
+// You can remove or comment out these imports if you are using the public folder paths below
+// import avatar from '../assets/images/avatar.jpg';
+// import hero from '../assets/images/hero.jpg';
 import type { SiteConfig } from '../types';
 
 const siteConfig: SiteConfig = {
     website: 'https://abs-garden.com',
     avatar: {
-        src: avatar,
-        alt: 'Ethan Donovan'
+        // Change this to the path of your desired avatar image
+        src: '/assets/images/book/555b.png', 
+        alt: 'Abs'
     },
     title: 'Abs',
-    subtitle: 'Digtial Garden & Books',
+    subtitle: 'Digital Garden & Books', // Fixed typo "Digtial" -> "Digital"
     description: 'Astro.js and Tailwind CSS theme for blog and portfolio by justgoodui.com',
     image: {
         src: '/dante-preview.jpg',
@@ -37,14 +39,9 @@ const siteConfig: SiteConfig = {
             href: '/books'
         },
         {
-            text: 'Social Links',
+            text: 'Links',
             href: '/links'
         },
-        {
-            text: 'Favorites',
-            href: '/favorites'
-        }
-        
     ],
     footerNavLinks: [
         // You can leave this empty to remove all links:
@@ -58,10 +55,10 @@ const siteConfig: SiteConfig = {
     ],
     hero: {
         title: 'Hi There & Welcome to My Corner of the Web!',
-        // CHANGE THIS LINE:
         text: "Welcome to my digital garden. 🌿 I plant ideas here, water them with code, and watch them grow.",
         image: {
-            src: hero,
+            // Change this to the path of your desired hero image
+            src: '/assets/images/book/555.png',
             alt: 'A person sitting at a desk in front of a computer'
         },
     },

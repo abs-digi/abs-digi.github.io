@@ -4,6 +4,10 @@ import siteConfig from '../data/site-config';
 const socialLinks = siteConfig.socialLinks ?? [];
 const navLinks = siteConfig.footerNavLinks ?? [];
 const currentYear = new Date().getFullYear();
+
+const icons: Record<string, string> = {
+    X: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/></svg>'
+};
 ---
 
 <footer class="mx-auto w-full max-w-3xl pt-12 pb-10 sm:pt-24 sm:pb-14">
@@ -29,12 +33,16 @@ const currentYear = new Date().getFullYear();
                 <div class="flex flex-wrap gap-x-4 gap-y-1">
                     {socialLinks.map((link) => (
                         <a
-                            class="inline-flex items-center justify-center text-sm hover:underline hover:underline-offset-2"
+                            class:list={[
+                                'inline-flex items-center justify-center text-sm',
+                                icons[link.text] ? 'hover:opacity-75' : 'hover:underline hover:underline-offset-2'
+                            ]}
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferer"
+                            aria-label={link.text}
                         >
-                            {link.text}
+                            {icons[link.text] ? <span set:html={icons[link.text]} /> : link.text}
                         </a>
                     ))}
                 </div>

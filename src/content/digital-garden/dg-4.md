@@ -1,9 +1,11 @@
 ---
-title: 'Git Commands & Website Setup'
+title: 'Git Commands & Repository Setup'
 description: Git Commands & Website Setup
 publishDate: 'Dec 11 2025'
+tags:
+  - Git
+  - Website
 ---
-
 
 
 

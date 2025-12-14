@@ -2,6 +2,10 @@
 title: 'Linux & ProxMox Commands'
 description: Troubleshooting
 publishDate: 'Dec 12 2025'
+tags:
+  - Linux
+  - Promox
+  - Troubleshooting
 ---
 
 ## Troubleshooting

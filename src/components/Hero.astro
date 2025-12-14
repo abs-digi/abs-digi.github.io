@@ -12,26 +12,40 @@ const { title, image, text, actions } = Astro.props;
 {
     (title || image?.src || text || (actions && actions.length > 0)) && (
         <section class="mb-16 flex w-full flex-col gap-8 sm:mb-24">
-            {title && <h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">{title}</h1>}
+            {title && (
+                <div class="mx-auto w-full max-w-3xl px-4 md:px-8">
+                    <h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">{title}</h1>
+                </div>
+            )}
+            
             {image?.src && (
-                <figure>
+                <figure class="w-full">
                     <CustomImage
-                        class="w-full"
+                        class="mx-auto h-auto w-auto max-w-full object-contain"
                         {...image}
-                        widths={[480, 640, 768, 1024, 1536]}
-                        sizes="(min-width: 832px) 768px, calc(100vw - 32px)"
+                        widths={[480, 640, 768, 1024, 1536, 1920]}
+                        sizes="100vw"
                         fetchpriority="high"
                         loading="eager"
                     />
-                    {image.caption && <figcaption class="mt-1.5 text-xs sm:text-sm">{image.caption}</figcaption>}
+                    {image.caption && (
+                        <div class="mx-auto w-full max-w-3xl px-4 md:px-8">
+                            <figcaption class="mt-1.5 text-xs sm:text-sm">{image.caption}</figcaption>
+                        </div>
+                    )}
                 </figure>
             )}
-            {text && <div class="prose sm:prose-lg max-w-none" set:html={marked.parse(text)} />}
-            {actions && actions.length > 0 && (
-                <div class="flex flex-wrap gap-4">
-                    {actions.map((action) => (
-                        <Button href={action.href}>{action.text}</Button>
-                    ))}
+
+            {(text || (actions && actions.length > 0)) && (
+                <div class="mx-auto w-full max-w-3xl px-4 md:px-8 flex flex-col gap-8">
+                    {text && <div class="prose sm:prose-lg max-w-none" set:html={marked.parse(text)} />}
+                    {actions && actions.length > 0 && (
+                        <div class="flex flex-wrap gap-4">
+                            {actions.map((action) => (
+                                <Button href={action.href}>{action.text}</Button>
+                            ))}
+                        </div>
+                    )}
                 </div>
             )}
         </section>

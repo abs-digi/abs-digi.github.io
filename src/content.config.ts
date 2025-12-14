@@ -38,7 +38,11 @@ const pages = defineCollection({
         })
 });
 
-// UPDATED: Now loading from the digital-garden folder
+// dante/src/content.config.ts
+
+// ... existing imports and code ...
+
+// ... inside the projects definition
 const projects = defineCollection({
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/digital-garden' }),
     schema: ({ image }) =>
@@ -47,6 +51,8 @@ const projects = defineCollection({
             description: z.string().optional(),
             publishDate: z.coerce.date(),
             isFeatured: z.boolean().default(false),
+            // ADD THIS LINE BELOW:
+            tags: z.array(z.string()).default([]), 
             seo: seoSchema(image).optional()
         })
 });
