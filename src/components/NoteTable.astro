@@ -1,0 +1,55 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import { slugify } from '../utils/common-utils';
+
+type Props = { posts: CollectionEntry<'projects'>[] | CollectionEntry<'blog'>[] };
+
+const { posts } = Astro.props;
+---
+
+<div class="overflow-x-auto">
+    <table class="w-full text-left text-sm sm:text-base border-collapse">
+        <thead class="border-b-2 border-[var(--border-main)] text-[var(--text-muted)] font-serif italic">
+            <tr>
+                {/* Column 1: Title */}
+                <th class="py-4 pr-4 font-normal w-1/2">Title</th>
+                {/* Column 2: Tags */}
+                <th class="py-4 px-4 font-normal w-1/4">Tags</th>
+                {/* Column 3: Date */}
+                <th class="py-4 pl-4 text-right font-normal w-1/4">Planted</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-[var(--border-main)]">
+            {posts.map((post) => (
+                <tr class="group hover:bg-[var(--bg-muted)] transition-colors duration-200">
+                    {/* 1. Title Cell */}
+                    <td class="py-3 pr-4 align-top">
+                        <a 
+                            href={`/${post.collection === 'projects' ? 'digital-garden' : 'blog'}/${post.id}/`} 
+                            class="block font-medium group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors"
+                        >
+                            {post.data.title}
+                        </a>
+                    </td>
+
+                    {/* 2. Tags Cell */}
+                    <td class="py-3 px-4 align-top">
+                        <div class="flex flex-wrap gap-2">
+                            {post.data.tags?.slice(0, 3).map((tag) => (
+                                <a href={`/tags/${slugify(tag)}`} class="text-xs px-2 py-1 rounded-full border border-[var(--border-main)] text-[var(--text-muted)] hover:border-purple-500 hover:text-purple-500 transition-colors">
+                                    #{tag}
+                                </a>
+                            ))}
+                        </div>
+                    </td>
+
+                    {/* 3. Date Cell */}
+                    <td class="py-3 pl-4 text-right align-top whitespace-nowrap text-[var(--text-muted)] font-mono text-xs sm:text-sm">
+                        <FormattedDate date={post.data.publishDate} />
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+</div>

@@ -2,15 +2,16 @@
 import type { GetStaticPathsOptions, Page } from 'astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
 import Pagination from '../../components/Pagination.astro';
-import ProjectPreview from '../../components/ProjectPreview.astro';
+// IMPORT THE NEW CARD COMPONENT
+import GardenCard from '../../components/GardenCard.astro';
 import siteConfig from '../../data/site-config';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { sortItemsByDateDesc } from '../../utils/data-utils';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    // We are still using the 'projects' collection ID to keep compatibility with existing components
     const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
-    return paginate(projects, { pageSize: siteConfig.projectsPerPage || 6 });
+    // Increase page size for grid view (e.g., 9 or 12 items)
+    return paginate(projects, { pageSize: 12 });
 }
 
 type Props = { page: Page<CollectionEntry<'projects'>> };
@@ -18,8 +19,20 @@ const { page } = Astro.props;
 const portfolio = page.data;
 ---
 
-<BaseLayout title="Digital Garden" description="A collection of my thoughts, experiments, and works in progress." showHeader={true}>
-    <h1 class="mb-12 font-serif text-2xl leading-tight italic sm:mb-16 sm:text-4xl">Digital Garden</h1>
-    {portfolio.map((project) => <ProjectPreview project={project} class="mb-10 sm:mb-12" />)}
+<BaseLayout title="Digital Garden" description="A collection of my thoughts..." showHeader={true}>
+    <div class="mb-12 sm:mb-16">
+        <h1 class="font-serif text-3xl italic sm:text-5xl mb-4">Digital Garden</h1>
+        <p class="text-lg opacity-80 max-w-2xl">
+            A collection of imperfect notes, sketches, and ideas growing slowly over time.
+        </p>
+    </div>
+    
+    {/* GRID LAYOUT: 1 column on mobile, 2 on tablet, 3 on desktop */}
+    <div class="mb-16 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {portfolio.map((project) => (
+            <GardenCard post={project} />
+        ))}
+    </div>
+
     <Pagination page={page} class="my-16 sm:my-24" />
 </BaseLayout>
