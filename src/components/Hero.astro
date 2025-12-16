@@ -11,15 +11,20 @@ const { title, image, text, actions } = Astro.props;
 
 {
     (title || image?.src || text || (actions && actions.length > 0)) && (
-        <section class="mb-16 flex w-full flex-col gap-8 sm:mb-24">
+        <section class="mb-20 flex w-full flex-col gap-10 sm:mb-28">
             {title && (
-                <div class="mx-auto w-full max-w-3xl px-4 md:px-8">
-                    <h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">{title}</h1>
+                <div class="mx-auto w-full max-w-4xl px-4 md:px-8">
+                    <h1 class="font-serif text-4xl leading-tight font-medium sm:text-6xl sm:leading-tight text-center">
+                        {title}
+                        <span class="block mt-4 font-handwritten text-2xl sm:text-3xl text-[var(--accent)]">
+                            A digital garden by Ab
+                        </span>
+                    </h1>
                 </div>
             )}
             
             {image?.src && (
-                <figure class="w-full">
+                <figure class="w-full sketchy-border max-w-2xl mx-auto">
                     <CustomImage
                         class="mx-auto h-auto w-auto max-w-full object-contain"
                         {...image}
@@ -30,22 +35,23 @@ const { title, image, text, actions } = Astro.props;
                     />
                     {image.caption && (
                         <div class="mx-auto w-full max-w-3xl px-4 md:px-8">
-                            <figcaption class="mt-1.5 text-xs sm:text-sm">{image.caption}</figcaption>
+                            <figcaption class="mt-3 text-sm font-handwritten text-[var(--accent-light)] text-center">{image.caption}</figcaption>
                         </div>
                     )}
                 </figure>
             )}
 
             {(text || (actions && actions.length > 0)) && (
-                <div class="mx-auto w-full max-w-3xl px-4 md:px-8 flex flex-col gap-8">
-                    {text && <div class="prose sm:prose-lg max-w-none" set:html={marked.parse(text)} />}
+                <div class="mx-auto w-full max-w-3xl px-4 md:px-8 flex flex-col gap-10 items-center">
+                    {text && <div class="prose sm:prose-lg max-w-none text-center text-pretty" set:html={marked.parse(text)} />}
                     {actions && actions.length > 0 && (
-                        <div class="flex flex-wrap gap-4">
+                        <div class="flex flex-wrap gap-6 justify-center">
                             {actions.map((action) => (
-                                <Button href={action.href}>{action.text}</Button>
+                                <Button href={action.href} variant="filled">{action.text}</Button>
                             ))}
                         </div>
                     )}
+                    <div class="sketchy-separator w-full max-w-xs"></div>
                 </div>
             )}
         </section>

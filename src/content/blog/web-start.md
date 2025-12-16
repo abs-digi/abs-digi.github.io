@@ -2,6 +2,7 @@
 title: The Start of Logging
 excerpt: The beginning of this digital garden / Book listing.
 publishDate: 'December 8 2025'
+status: '🌱 seedling'
 tags:
   - Personal
   - Update

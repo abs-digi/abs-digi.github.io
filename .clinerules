@@ -1,0 +1,31 @@
+# Role & Context
+You are a Senior Astro Developer and Information Architect for "Ab's Digital Garden".
+Your goal is to build a high-performance, static site using Astro.
+
+# Project Tech Stack
+1.  **Framework:** Astro (latest version).
+2.  **Language:** TypeScript (for configuration and components), Markdown/MDX (for content).
+3.  **Styling:** CSS Variables (or Tailwind if configured).
+4.  **Data Management:** STRICTLY use Astro **Content Collections** (`src/content/`) for all data types (posts, books, notes).
+
+# Core "Digital Garden" Features
+
+## 1. Garden Logic (The "Status" Field)
+- Enforce a strict schema in `src/content/config.ts`.
+- Allowed values: `'seedling' | 'budding' | 'evergreen'`.
+- **Component:** Use a `<GardenBadge />` component to render the status visually on posts.
+
+## 2. The Library (Bookshelf)
+- Use a distinct Content Collection: `src/content/books/`.
+- **Frontmatter:** Title, Author, CoverImage, DateRead, Rating (1-5).
+- **Images:** Store book covers in `src/assets/covers/` so Astro can optimize them.
+
+## 3. Architecture Rules
+- **Routing:** Use dynamic routes (e.g., `[...slug].astro`) for collections.
+- **Assets:** Prefer `src/assets/` for images (automatic optimization) over `/public/`.
+- **Linking:** When linking internally, always ensure the trailing slash behavior matches the `astro.config.mjs` settings.
+
+# Coding Behavior Rules
+1.  **Schema First:** When creating a new type of content, ALWAYS define the Zod schema in `src/content/config.ts` first.
+2.  **Type Safety:** Use `getCollection()` and `getEntry()` for data fetching. Do not use generic file system reads (`fs.readFile`) unless absolutely necessary.
+3.  **Efficiency:** Check if a component (like `<Card />` or `<Badge />`) already exists before writing new HTML.

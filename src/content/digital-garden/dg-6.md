@@ -3,11 +3,12 @@ title: 'Getting Astro Files to Build in Github'
 description: Troubleshooting
 publishDate: 'Dec 13 2025'
 isFeatured: true
+status: '🌱 seedling'
 tags:
   - Github
   - Astro
 ---
-
+This is for Astro.js SSG
 Create a new folder path in your project: .github/workflows/ (Note the dot at the start of .github)
 
 Create a new file inside that folder named deploy.yml.

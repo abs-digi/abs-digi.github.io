@@ -2,6 +2,7 @@
 title: 'Linux & ProxMox Commands'
 description: Troubleshooting
 publishDate: 'Dec 12 2025'
+status: '🌱 seedling'
 tags:
   - Linux
   - Promox

@@ -2,6 +2,7 @@
 title: My Third Post
 excerpt: My third Post
 publishDate: 'December 09 2025'
+status: '🌱 seedling'
 tags:
   - Personal
   - Update

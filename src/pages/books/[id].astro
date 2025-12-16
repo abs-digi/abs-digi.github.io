@@ -1,0 +1,141 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/Button.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Subscribe from '../../components/Subscribe.astro';
+import { Image } from 'astro:assets';
+import { sortBooksByDateDesc } from '../../utils/data-utils';
+
+export async function getStaticPaths() {
+    const books = (await getCollection('books')).sort(sortBooksByDateDesc);
+    const bookCount = books.length;
+    return books.map((book, index) => ({
+        params: { id: book.id },
+        props: {
+            book,
+            prevBook: index + 1 !== bookCount ? books[index + 1] : null,
+            nextBook: index !== 0 ? books[index - 1] : null
+        }
+    }));
+}
+
+type Props = { book: CollectionEntry<'books'>; prevBook: CollectionEntry<'books'>; nextBook: CollectionEntry<'books'> };
+
+const { href } = Astro.url;
+const { book, prevBook, nextBook } = Astro.props;
+const { title, author, cover, rating, dateRead } = book.data;
+const { Content } = await render(book);
+---
+
+<BaseLayout title={title} description={`Book review of ${title} by ${author}`} image={cover} pageType="article" showHeader={false}>
+    <article class="mb-16 sm:mb-24">
+        <header class="mb-8">
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                {cover && (
+                    <div class="md:w-1/3">
+                        <Image 
+                            src={cover} 
+                            alt={`Cover of ${title}`}
+                            class="rounded-lg shadow-lg w-full max-w-xs"
+                            width={300}
+                            height={450}
+                        />
+                    </div>
+                )}
+                <div class="md:w-2/3">
+                    <h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">{title}</h1>
+                    <p class="mt-2 text-xl text-gray-600 dark:text-gray-400">by {author}</p>
+                    
+                    <div class="mt-4 flex flex-wrap items-center gap-4">
+                        {rating && (
+                            <div class="flex items-center">
+                                <span class="text-lg font-medium">Rating:</span>
+                                <span class="ml-2 text-2xl text-yellow-500">
+                                    {'★'.repeat(rating)}{'☆'.repeat(5 - rating)}
+                                </span>
+                                <span class="ml-2 text-lg">({rating}/5)</span>
+                            </div>
+                        )}
+                        {dateRead && (
+                            <div class="flex items-center">
+                                <span class="text-lg font-medium">Read:</span>
+                                <span class="ml-2">
+                                    <FormattedDate date={dateRead} />
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="prose sm:prose-lg max-w-none">
+            <Content />
+        </div>
+        
+        <div class="mt-8 flex items-center justify-between gap-6 text-sm sm:mt-12 sm:text-base">
+            <Button class="copy-url-button" aria-label="Copy link" data-url={href} data-tooltip-default="Copy link" data-tooltip-success="Copied">Share</Button>
+        </div>
+    </article>
+    
+    {
+        (prevBook || nextBook) && (
+            <div class="my-16 sm:my-24">
+                <h2 class="mb-12 font-serif text-xl italic sm:mb-16 sm:text-2xl">More Books</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {nextBook && (
+                        <div class="border border-gray-200 dark:border-gray-800 rounded-lg p-6 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
+                            <a href={`/books/${nextBook.id}`} class="block">
+                                <h3 class="font-serif text-xl font-medium mb-2">{nextBook.data.title}</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">by {nextBook.data.author}</p>
+                                {nextBook.data.rating && (
+                                    <div class="text-yellow-500">
+                                        {'★'.repeat(nextBook.data.rating)}{'☆'.repeat(5 - nextBook.data.rating)}
+                                    </div>
+                                )}
+                            </a>
+                        </div>
+                    )}
+                    {prevBook && (
+                        <div class="border border-gray-200 dark:border-gray-800 rounded-lg p-6 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
+                            <a href={`/books/${prevBook.id}`} class="block">
+                                <h3 class="font-serif text-xl font-medium mb-2">{prevBook.data.title}</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">by {prevBook.data.author}</p>
+                                {prevBook.data.rating && (
+                                    <div class="text-yellow-500">
+                                        {'★'.repeat(prevBook.data.rating)}{'☆'.repeat(5 - prevBook.data.rating)}
+                                    </div>
+                                )}
+                            </a>
+                        </div>
+                    )}
+                </div>
+            </div>
+        )
+    }
+    
+    <Subscribe class="my-16 sm:my-24" />
+</BaseLayout>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const copyUrlButton = document.querySelector('.copy-url-button') as HTMLButtonElement;
+        copyUrlButton?.addEventListener('click', async () => {
+            await copyUrl(copyUrlButton);
+        });
+
+        async function copyUrl(button: HTMLButtonElement) {
+            let url = button.getAttribute('data-url') || '';
+            let label = button.innerText;
+
+            await navigator.clipboard.writeText(url);
+
+            button.innerText = 'Copied';
+
+            setTimeout(() => {
+                button.innerText = label;
+            }, 2500);
+        }
+    });
+</script>

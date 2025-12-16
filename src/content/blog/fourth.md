@@ -2,6 +2,7 @@
 title: 12-12-25
 excerpt: Domain name update
 publishDate: 'December 12 2025'
+status: '🌱 seedling'
 tags:
   - Personal
   - Update

@@ -2,6 +2,7 @@
 title: My Second Blog Post
 excerpt: Second Blog Post.
 publishDate: 'December 10 2024'
+status: '🌱 seedling'
 tags:
   - Personal
   - Update

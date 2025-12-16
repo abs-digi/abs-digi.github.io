@@ -8,7 +8,13 @@ import siteConfig from './src/data/site-config';
 export default defineConfig({
     site: siteConfig.website,
     vite: {
-        plugins: [tailwindcss()]
+        plugins: [tailwindcss()],
+        server: {
+            fs: {
+                // Fixes the error by allowing Vite to load fonts/scripts from your parent node_modules
+                allow: ['..']
+            }
+        }
     },
     integrations: [mdx(), sitemap()]
 });

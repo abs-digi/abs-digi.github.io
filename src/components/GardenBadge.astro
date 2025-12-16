@@ -1,0 +1,92 @@
+---
+// src/components/GardenBadge.astro
+
+interface Props {
+  status: 'seedling' | 'budding' | 'evergreen';
+}
+
+const { status } = Astro.props;
+
+// Configuration for each stage (Icon + Label + Color Class)
+const stages = {
+  seedling: {
+    icon: '🌱',
+    label: 'Seedling',
+    className: 'badge-seedling'
+  },
+  budding: {
+    icon: '🌿',
+    label: 'Budding',
+    className: 'badge-budding'
+  },
+  evergreen: {
+    icon: '🌳',
+    label: 'Evergreen',
+    className: 'badge-evergreen'
+  }
+};
+
+const currentStage = stages[status];
+---
+
+<span class={`garden-badge ${currentStage.className}`}>
+  <span class="icon" aria-hidden="true">{currentStage.icon}</span>
+  <span class="label">{currentStage.label}</span>
+</span>
+
+<style>
+  /* Base Badge Styles */
+  .garden-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px; /* Pill shape */
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 2px solid;
+    font-family: var(--font-handwritten);
+    font-weight: 500;
+    text-transform: none;
+  }
+
+  /* 1. Seedling (New, Rough) - Soft Green/Earthy */
+  .badge-seedling {
+    background-color: color-mix(in srgb, var(--accent-light) 15%, transparent);
+    color: color-mix(in srgb, var(--accent) 80%, black);
+    border-color: color-mix(in srgb, var(--accent-light) 40%, transparent);
+  }
+
+  /* 2. Budding (Growing) - Vibrant Blue/Teal */
+  .badge-budding {
+    background-color: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: color-mix(in srgb, var(--accent) 90%, black);
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  /* 3. Evergreen (Polished) - Deep Forest/Gold */
+  .badge-evergreen {
+    background-color: color-mix(in srgb, var(--accent-light) 20%, transparent);
+    color: color-mix(in srgb, var(--accent-light) 100%, black);
+    border-color: color-mix(in srgb, var(--accent-light) 50%, transparent);
+  }
+
+  /* Dark Mode Support */
+  :global(.dark) .badge-seedling {
+    background-color: color-mix(in srgb, var(--accent) 20%, transparent);
+    color: color-mix(in srgb, var(--accent-light) 90%, white);
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  :global(.dark) .badge-budding {
+    background-color: color-mix(in srgb, var(--accent-light) 20%, transparent);
+    color: color-mix(in srgb, var(--accent-light) 100%, white);
+    border-color: color-mix(in srgb, var(--accent-light) 40%, transparent);
+  }
+  :global(.dark) .badge-evergreen {
+    background-color: color-mix(in srgb, var(--accent) 25%, transparent);
+    color: color-mix(in srgb, var(--accent) 100%, white);
+    border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+</style>

@@ -1,64 +1,42 @@
-// You can remove or comment out these imports if you are using the public folder paths below
-// import avatar from '../assets/images/avatar.jpg';
-// import hero from '../assets/images/hero.jpg';
+// 1. IMPORT YOUR IMAGES HERE
+// Note: We use the relative path to where the files are located in src/assets/images/books/book/
+import avatarImage from '../assets/images/book/555b.png';
+import heroImage from '../assets/images/book/555.png';
 import type { SiteConfig } from '../types';
 
 const siteConfig: SiteConfig = {
     website: 'https://abs-garden.com',
     avatar: {
-        // Change this to the path of your desired avatar image
-        src: '/assets/images/book/555b.png', 
-        alt: 'Abs'
+        // 2. USE THE IMPORTED VARIABLE HERE
+        src: avatarImage, 
+        alt: 'Ab'
     },
-    title: 'Abs',
-    subtitle: 'Digital Garden & Books', // Fixed typo "Digtial" -> "Digital"
+    title: "Ab's Digital Garden",
+    subtitle: 'Digital Garden & Books',
     description: 'Astro.js and Tailwind CSS theme for blog and portfolio by justgoodui.com',
     image: {
-        src: '/dante-preview.jpg',
+        src: '/dante-preview.jpg', // This is fine if dante-preview.jpg is still in public/
         alt: 'Dante - Astro.js and Tailwind CSS theme'
     },
     headerNavLinks: [
-        {
-            text: 'Home',
-            href: '/'
-        },
-        {
-            text: 'Digital Garden',
-            href: '/digital-garden'
-        },
-        {
-            text: 'Blog',
-            href: '/blog'
-        },
-        {
-            text: 'Tags',
-            href: '/tags'
-        },
-        {
-            text: 'Books',
-            href: '/books'
-        },
-        {
-            text: 'Links',
-            href: '/links'
-        },
+        { text: 'Home', href: '/' },
+        { text: 'Digital Garden', href: '/digital-garden' },
+        { text: 'Blog', href: '/blog' },
+        { text: 'Tags', href: '/tags' },
+        { text: 'Books', href: '/books' },
+        { text: 'Links', href: '/links' },
+        { text: 'Favorites', href: '/favorites' },
     ],
-    footerNavLinks: [
-        // You can leave this empty to remove all links:
-    ],
+    footerNavLinks: [],
     socialLinks: [
-        
-        {
-            text: 'X',
-            href: 'https://x.com/abs_digi'
-        }
+        { text: 'X', href: 'https://x.com/abs_digi' }
     ],
     hero: {
         title: 'Hi There & Welcome to My Corner of the Web!',
         text: "Welcome to my digital garden. 🌿 I plant ideas here, water them with code, and watch them grow.",
         image: {
-            // Change this to the path of your desired hero image
-            src: '/assets/images/book/555.png',
+            // 3. USE THE IMPORTED VARIABLE HERE
+            src: heroImage,
             alt: 'A person sitting at a desk in front of a computer'
         },
     },

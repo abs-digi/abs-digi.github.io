@@ -3,10 +3,18 @@ import { slugify } from './common-utils';
 
 // Add this type union
 type TaggedPost = CollectionEntry<'blog'> | CollectionEntry<'projects'>;
+type BookEntry = CollectionEntry<'books'>;
 
 // Update function signature to use TaggedPost
 export function sortItemsByDateDesc(itemA: TaggedPost, itemB: TaggedPost) {
     return new Date(itemB.data.publishDate).getTime() - new Date(itemA.data.publishDate).getTime();
+}
+
+// Sorting function for books based on dateRead
+export function sortBooksByDateDesc(itemA: BookEntry, itemB: BookEntry) {
+    const dateA = itemA.data.dateRead ? new Date(itemA.data.dateRead).getTime() : 0;
+    const dateB = itemB.data.dateRead ? new Date(itemB.data.dateRead).getTime() : 0;
+    return dateB - dateA;
 }
 
 // Update function signature to use TaggedPost[]

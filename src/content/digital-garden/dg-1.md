@@ -3,6 +3,7 @@ title: 'My First Digital Garden Note'
 description: Planting the Garden.
 publishDate: 'Dec 08 2025'
 isFeatured: true
+status: '🌱 seedling'
 tags:
   - Garden
   - Update

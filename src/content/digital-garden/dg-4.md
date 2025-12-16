@@ -2,6 +2,7 @@
 title: 'Git Commands & Repository Setup'
 description: Git Commands & Website Setup
 publishDate: 'Dec 11 2025'
+status: '🌱 seedling'
 tags:
   - Git
   - Website
@@ -12,7 +13,7 @@ tags:
 ## Start
 Create your repository in GitHub, name it "your-repo-name".
 
-`cd` into the folder.
+cd into the folder.
 
 ### To establish who is working on these files
 ```bash
