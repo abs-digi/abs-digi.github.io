@@ -1,9 +1,8 @@
 ---
 title: 'Setting Up Proxmox'
 description: 'Notes on installing and configuring Proxmox virtualization platform'
-publishDate: 'Dec 16 2025'
-isFeatured: false
-status: '🌱 seedling'
+created: '2025-12-16'
+status: 'seedling'
 tags:
   - proxmox
   - virtualization

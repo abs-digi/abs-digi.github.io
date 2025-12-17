@@ -1,13 +1,12 @@
 ---
 title: 'Git Commands & Repository Setup'
 description: Git Commands & Website Setup
-publishDate: 'Dec 11 2025'
-status: '🌱 seedling'
+created: '2025-12-11'
+status: 'seedling'
 tags:
   - Git
   - Website
 ---
-
 
 
 ## Start
@@ -49,4 +48,3 @@ git commit -m "Your first meaningful commit message"
 ### Push to GitHub (use -u only on the first push)
 ```bash
 git push -u origin main
-```

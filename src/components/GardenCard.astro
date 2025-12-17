@@ -2,24 +2,24 @@
 import { type CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 
-type Props = { post: CollectionEntry<'projects'> };
+type Props = { post: CollectionEntry<'garden'>; class?: string };
 
-const { post } = Astro.props;
-const { title, description, publishDate, tags, status } = post.data;
+const { post, class: className } = Astro.props;
+const { title, description, created, updated, tags, status } = post.data;
 
-// Maggie Appleton Style: Growth Icons based on status field
-const icon = status === '🌱 seedling' ? '🌱'
-    : status === '🌳 evergreen' ? '🌳'
+// Maggie Appleton Style: Growth Icons based on status field (garden collection uses 'seedling', 'budding', 'evergreen')
+const icon = status === 'seedling' ? '🌱'
+    : status === 'evergreen' ? '🌳'
     : '🌿'; // Default to budding
 ---
 
-<article class="group relative h-full">
+<article class:list={["group relative h-full", className]}>
     <a href={`/digital-garden/${post.id}/`} class="absolute inset-0 z-10"></a>
     <div class="flex flex-col h-full rounded-xl border-2 border-[var(--border-main)] bg-[var(--bg-main)] p-6 transition-all hover:border-[var(--accent)] hover:shadow-lg hover:-translate-y-1">
         <div class="mb-4 flex items-center justify-between">
             <span class="text-3xl">{icon}</span>
             <span class="text-xs font-serif italic text-[var(--accent-light)]">
-                <FormattedDate date={publishDate} />
+                <FormattedDate date={created} />
             </span>
         </div>
         

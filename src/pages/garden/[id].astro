@@ -1,0 +1,116 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GardenBadge from '../../components/GardenBadge.astro';
+import { sortItemsByDateDesc } from '../../utils/data-utils';
+
+export async function getStaticPaths() {
+    const gardenNotes = (await getCollection('garden')).sort((a, b) => 
+        new Date(b.data.created).getTime() - new Date(a.data.created).getTime()
+    );
+    const noteCount = gardenNotes.length;
+    return gardenNotes.map((note, index) => ({
+        params: { id: note.id },
+        props: {
+            note,
+            prevNote: index + 1 !== noteCount ? gardenNotes[index + 1] : null,
+            nextNote: index !== 0 ? gardenNotes[index - 1] : null
+        }
+    }));
+}
+
+type Props = {
+    note: CollectionEntry<'garden'>;
+    prevNote: CollectionEntry<'garden'>;
+    nextNote: CollectionEntry<'garden'>;
+};
+
+const { note, prevNote, nextNote } = Astro.props;
+const { title, description, created, updated, tags = [], status } = note.data;
+const { Content } = await render(note);
+---
+
+<BaseLayout title={title} description={description} pageType="article" showHeader={false}>
+    <article class="mb-16 sm:mb-24">
+        <header class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <GardenBadge status={status} />
+                <span class="text-sm text-[var(--text-muted)]">
+                    <time datetime={created.toISOString()}>
+                        {new Date(created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </time>
+                    {updated && (
+                        <span class="ml-2">
+                            (Updated <time datetime={updated.toISOString()}>
+                                {new Date(updated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                            </time>)
+                        </span>
+                    )}
+                </span>
+            </div>
+            <h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">{title}</h1>
+            {description && (
+                <p class="mt-4 text-lg text-[var(--text-main)] opacity-90">
+                    {description}
+                </p>
+            )}
+        </header>
+        <div class="prose sm:prose-lg max-w-none">
+            <Content />
+        </div>
+        {tags.length > 0 && (
+            <div class="mt-8 flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                    <a href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`} class="text-sm px-3 py-1 rounded-full bg-[var(--bg-muted)] text-[var(--accent)] border border-[var(--border-main)] hover:bg-[var(--accent-light)] hover:text-[var(--bg-main)] transition-colors">
+                        #{tag}
+                    </a>
+                ))}
+            </div>
+        )}
+    </article>
+    {(prevNote || nextNote) && (
+        <div class="my-16 sm:my-24">
+            <h2 class="mb-12 font-serif text-xl italic sm:mb-16 sm:text-2xl">More Notes</h2>
+            <div class="space-y-10">
+                {nextNote && (
+                    <article class="border-b border-[var(--border-main)] pb-10">
+                        <h3 class="font-serif text-xl leading-tight font-medium sm:text-2xl">
+                            <a href={`/garden/${nextNote.id}/`} class="hover:underline hover:decoration-dashed hover:decoration-1 hover:underline-offset-4">
+                                {nextNote.data.title}
+                            </a>
+                        </h3>
+                        <div class="mt-2 text-sm text-[var(--text-muted)]">
+                            <time datetime={nextNote.data.created.toISOString()}>
+                                {new Date(nextNote.data.created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                            </time>
+                        </div>
+                        {nextNote.data.description && (
+                            <p class="mt-3 text-sm leading-normal text-[var(--text-main)] opacity-90">
+                                {nextNote.data.description}
+                            </p>
+                        )}
+                    </article>
+                )}
+                {prevNote && (
+                    <article class="border-b border-[var(--border-main)] pb-10">
+                        <h3 class="font-serif text-xl leading-tight font-medium sm:text-2xl">
+                            <a href={`/garden/${prevNote.id}/`} class="hover:underline hover:decoration-dashed hover:decoration-1 hover:underline-offset-4">
+                                {prevNote.data.title}
+                            </a>
+                        </h3>
+                        <div class="mt-2 text-sm text-[var(--text-muted)]">
+                            <time datetime={prevNote.data.created.toISOString()}>
+                                {new Date(prevNote.data.created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                            </time>
+                        </div>
+                        {prevNote.data.description && (
+                            <p class="mt-3 text-sm leading-normal text-[var(--text-main)] opacity-90">
+                                {prevNote.data.description}
+                            </p>
+                        )}
+                    </article>
+                )}
+            </div>
+        </div>
+    )}
+</BaseLayout>

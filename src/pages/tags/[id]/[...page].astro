@@ -1,10 +1,10 @@
 ---
 import type { GetStaticPathsOptions, Page } from 'astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
+import BookCard from '../../../components/BookCard.astro';
+import GardenCard from '../../../components/GardenCard.astro';
 import Pagination from '../../../components/Pagination.astro';
 import PostPreview from '../../../components/PostPreview.astro';
-// ADD THIS LINE:
-import ProjectPreview from '../../../components/ProjectPreview.astro'; 
 import Subscribe from '../../../components/Subscribe.astro';
 import siteConfig from '../../../data/site-config';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
@@ -13,12 +13,13 @@ import { getAllTags, getPostsByTag, sortItemsByDateDesc } from '../../../utils/d
 // ... imports ...
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    // FETCH BOTH COLLECTIONS
+    // FETCH ALL COLLECTIONS WITH TAGS
     const blogPosts = await getCollection('blog');
-    const gardenPosts = await getCollection('projects');
+    const gardenNotes = await getCollection('garden');
+    const books = await getCollection('books');
 
     // COMBINE THEM
-    const posts = [...blogPosts, ...gardenPosts].sort(sortItemsByDateDesc);
+    const posts = [...blogPosts, ...gardenNotes, ...books].sort(sortItemsByDateDesc);
     const tags = getAllTags(posts);
 
     return tags.flatMap((tag) => {
@@ -31,15 +32,16 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 // UPDATE PROPS TYPE
-type Props = { page: Page<CollectionEntry<'blog'> | CollectionEntry<'projects'>> };
+type Props = { page: Page<CollectionEntry<'blog'> | CollectionEntry<'garden'> | CollectionEntry<'books'>> };
 const { page } = Astro.props;
 const blog = page.data;
 const params = Astro.params;
 
 // --- NEW LOGIC START ---
 const blogPosts = await getCollection('blog');
-const gardenPosts = await getCollection('projects');
-const allPosts = [...blogPosts, ...gardenPosts];
+const gardenNotes = await getCollection('garden');
+const books = await getCollection('books');
+const allPosts = [...blogPosts, ...gardenNotes, ...books];
 // --- NEW LOGIC END ---
 
 const allTags = getAllTags(allPosts);
@@ -52,8 +54,10 @@ const currentTag = allTags.find((tag) => {
     <h1 class="mb-12 font-serif text-2xl leading-tight italic sm:mb-16 sm:text-4xl">Posts Tagged "{currentTag?.name}"</h1>
 {
         blog.map((post) => {
-            if (post.collection === 'projects') {
-                return <ProjectPreview project={post} class="mb-10 sm:mb-12" />;
+            if (post.collection === 'garden') {
+                return <GardenCard post={post} class="mb-10 sm:mb-12" />;
+            } else if (post.collection === 'books') {
+                return <BookCard book={post} class="mb-10 sm:mb-12" />;
             } else {
                 return <PostPreview post={post} class="mb-10 sm:mb-12" />;
             }

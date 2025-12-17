@@ -1,0 +1,57 @@
+---
+import type { GetStaticPathsOptions, Page } from 'astro';
+import { type CollectionEntry, getCollection } from 'astro:content';
+import Pagination from '../../components/Pagination.astro';
+import siteConfig from '../../data/site-config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    const gardenNotes = (await getCollection('garden')).sort((a, b) =>
+        new Date(b.data.created).getTime() - new Date(a.data.created).getTime()
+    );
+    return paginate(gardenNotes, { pageSize: siteConfig.postsPerPage || 8 });
+}
+
+type Props = { page: Page<CollectionEntry<'garden'>> };
+
+const { page } = Astro.props;
+const notes = page.data;
+---
+
+<BaseLayout title="Garden Notes" description="A collection of evolving notes and thoughts" showHeader={true}>
+    <h1 class="mb-12 font-serif text-2xl leading-tight italic sm:mb-16 sm:text-4xl">Garden Notes</h1>
+    <div class="space-y-10">
+        {notes.map((note) => (
+            <article class="border-b border-[var(--border-main)] pb-10">
+                <h2 class="font-serif text-xl leading-tight font-medium sm:text-2xl">
+                    <a href={`/garden/${note.id}/`} class="hover:underline hover:decoration-dashed hover:decoration-1 hover:underline-offset-4">
+                        {note.data.title}
+                    </a>
+                </h2>
+                <div class="mt-2 text-sm text-[var(--text-muted)]">
+                    <time datetime={note.data.created.toISOString()}>
+                        {new Date(note.data.created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </time>
+                    {note.data.updated && (
+                        <span class="ml-2">
+                            (Updated <time datetime={note.data.updated.toISOString()}>
+                                {new Date(note.data.updated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                            </time>)
+                        </span>
+                    )}
+                </div>
+                {note.data.description && (
+                    <p class="mt-3 text-sm leading-normal text-[var(--text-main)] opacity-90">
+                        {note.data.description}
+                    </p>
+                )}
+                <div class="mt-4">
+                    <a href={`/garden/${note.id}/`} class="text-sm font-serif italic text-[var(--accent)] hover:underline">
+                        Read note →
+                    </a>
+                </div>
+            </article>
+        ))}
+    </div>
+    <Pagination page={page} class="my-16 sm:my-24" />
+</BaseLayout>

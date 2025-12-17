@@ -2,21 +2,21 @@
 import type { GetStaticPathsOptions, Page } from 'astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
 import Pagination from '../../components/Pagination.astro';
-// IMPORT THE NEW CARD COMPONENT
 import GardenCard from '../../components/GardenCard.astro';
 import siteConfig from '../../data/site-config';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { sortItemsByDateDesc } from '../../utils/data-utils';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
+    const gardenNotes = (await getCollection('garden')).sort((a, b) =>
+        new Date(b.data.created).getTime() - new Date(a.data.created).getTime()
+    );
     // Increase page size for grid view (e.g., 9 or 12 items)
-    return paginate(projects, { pageSize: 12 });
+    return paginate(gardenNotes, { pageSize: 12 });
 }
 
-type Props = { page: Page<CollectionEntry<'projects'>> };
+type Props = { page: Page<CollectionEntry<'garden'>> };
 const { page } = Astro.props;
-const portfolio = page.data;
+const garden = page.data;
 ---
 
 <BaseLayout title="Digital Garden" description="A collection of my thoughts..." showHeader={true}>
@@ -29,8 +29,8 @@ const portfolio = page.data;
     
     {/* GRID LAYOUT: 1 column on mobile, 2 on tablet, 3 on desktop */}
     <div class="mb-16 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {portfolio.map((project) => (
-            <GardenCard post={project} />
+        {garden.map((note) => (
+            <GardenCard post={note} />
         ))}
     </div>
 

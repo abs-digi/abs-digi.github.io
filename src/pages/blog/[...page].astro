@@ -10,7 +10,7 @@ import { sortItemsByDateDesc } from '../../utils/data-utils';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
-    return paginate(posts, { pageSize: siteConfig.postsPerPage || 4 });
+    return paginate(posts, { pageSize: siteConfig.postsPerPage || 12 });
 }
 
 type Props = { page: Page<CollectionEntry<'blog'>> };
@@ -20,8 +20,20 @@ const blog = page.data;
 ---
 
 <BaseLayout title="Blog" description="Embark on a journey of personal insights and experiences through my blog" showHeader={true}>
-    <h1 class="mb-12 font-serif text-2xl leading-tight italic sm:mb-16 sm:text-4xl">Blog Archive</h1>
-    {blog.map((post) => <PostPreview post={post} class="mb-10 sm:mb-12" />)}
+    <div class="mb-12 sm:mb-16">
+        <h1 class="font-serif text-3xl italic sm:text-5xl mb-4">Blog Archive</h1>
+        <p class="text-lg opacity-80 max-w-2xl">
+            A collection of polished articles, essays, and reflections.
+        </p>
+    </div>
+    
+    {/* GRID LAYOUT: 1 column on mobile, 2 on tablet, 3 on desktop */}
+    <div class="mb-16 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {blog.map((post) => (
+            <PostPreview post={post} />
+        ))}
+    </div>
+
     <Pagination page={page} class="my-16 sm:my-24" />
     <Subscribe class="my-16 sm:my-24" />
 </BaseLayout>

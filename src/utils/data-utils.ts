@@ -2,12 +2,24 @@ import { type CollectionEntry } from 'astro:content';
 import { slugify } from './common-utils';
 
 // Add this type union
-type TaggedPost = CollectionEntry<'blog'> | CollectionEntry<'projects'>;
+type TaggedPost = CollectionEntry<'blog'> | CollectionEntry<'garden'> | CollectionEntry<'books'>;
 type BookEntry = CollectionEntry<'books'>;
+
+// Helper function to get the date from different collection types
+function getItemDate(item: TaggedPost): Date {
+    if (item.collection === 'garden') {
+        return new Date(item.data.created);
+    } else if (item.collection === 'books') {
+        return item.data.dateRead ? new Date(item.data.dateRead) : new Date(0);
+    } else {
+        // blog has publishDate
+        return new Date(item.data.publishDate);
+    }
+}
 
 // Update function signature to use TaggedPost
 export function sortItemsByDateDesc(itemA: TaggedPost, itemB: TaggedPost) {
-    return new Date(itemB.data.publishDate).getTime() - new Date(itemA.data.publishDate).getTime();
+    return getItemDate(itemB).getTime() - getItemDate(itemA).getTime();
 }
 
 // Sorting function for books based on dateRead

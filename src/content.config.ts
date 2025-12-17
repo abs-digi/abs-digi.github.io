@@ -49,6 +49,7 @@ const books = defineCollection({
     
     rating: z.number().min(1).max(5).optional(),
     dateRead: z.coerce.date().optional(),
+    tags: z.array(z.string()).default([]),
   }),
 });
 

@@ -16,7 +16,7 @@
 #
 # FRONTMATTER FIELDS (all are optional except title and author):
 # --------------------------------------------------------------
-title: 'Before They Are Hanged'
+title: 'The Blade Itself'
 author: 'Joe Abercrombie'
 # Rating from 1-5 stars
 rating: 4
@@ -24,7 +24,7 @@ rating: 4
 dateRead: 2024-12-16
 # Cover image path relative to src/assets/
 # Example: ../../assets/images/rrt/1 (1).jpg
-cover: ../../assets/images/ja/1 (1).jpg
+cover: ../../assets/images/rrt/1 (1).jpg
 # Tags (optional)
 tags:
   - Fantasy
@@ -50,4 +50,4 @@ This is where you can write detailed thoughts about the book. Use headings, list
 
 ## Rating Explanation
 
-If you gave a rating, explain why here. What worked well? What could have been better?
+If you gave a rating, explain why here. What worked well? What could have been better?=

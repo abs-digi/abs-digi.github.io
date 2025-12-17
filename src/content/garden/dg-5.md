@@ -1,11 +1,11 @@
 ---
 title: 'Linux & ProxMox Commands'
 description: Troubleshooting
-publishDate: 'Dec 12 2025'
-status: '🌱 seedling'
+created: '2025-12-12'
+status: 'seedling'
 tags:
   - Linux
-  - Promox
+  - Proxmox
   - Troubleshooting
 ---
 
