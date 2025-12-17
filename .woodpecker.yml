@@ -1,0 +1,15 @@
+steps:
+  build:
+    image: node:lts
+    commands:
+      - npm ci
+      - npm run build
+
+  deploy:
+    image: codeberg.org/xfix/plugin-codeberg-pages-deploy
+    settings:
+      folder: dist   # Astro builds to 'dist' by default
+      ssh_key:
+        from_secret: SSH_KEY
+    when:
+      branch: main   # Or 'master', whichever is your default branch
