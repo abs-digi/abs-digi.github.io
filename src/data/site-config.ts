@@ -5,7 +5,7 @@ import avatarImage from '../assets/images/book/555b.png';
 import type { SiteConfig } from '../types';
 
 const siteConfig: SiteConfig = {
-    website: 'https://abs-digi.codeberg.page',
+    website: 'https://abs-garden.com',
     avatar: {
         // 2. USE THE IMPORTED VARIABLE HERE
         src: avatarImage, 
