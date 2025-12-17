@@ -3,7 +3,30 @@
 ---
 
 <button id="theme-toggle" class="-mr-2 flex h-8 w-8 cursor-pointer items-center justify-center" aria-label="Change color scheme">
-    <svg class="h-4 w-4 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="8" cy="8" r="8"></circle>
+    <!-- Sun icon (visible in dark mode) -->
+    <svg class="sun-icon h-5 w-5 fill-current transition-transform duration-300 hover:rotate-12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v6m0 6v6m8.66-8.66l-4.24 4.24m-4.24 0L7.34 7.34m12.02 0l-4.24 4.24m-4.24 0L7.34 16.66M23 12h-6m-6 0H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <!-- Moon icon (visible in light mode) -->
+    <svg class="moon-icon h-5 w-5 fill-current transition-transform duration-300 hover:-rotate-12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     </svg>
 </button>
+
+<style>
+    /* Show moon in light mode, sun in dark mode */
+    .sun-icon {
+        display: none;
+    }
+    .moon-icon {
+        display: block;
+    }
+    
+    :global(.dark) .sun-icon {
+        display: block;
+    }
+    :global(.dark) .moon-icon {
+        display: none;
+    }
+</style>
