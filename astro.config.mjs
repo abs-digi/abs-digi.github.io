@@ -6,13 +6,12 @@ import siteConfig from './src/data/site-config';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://abs-digi.codeberg.page',
-    base: 'pages',    
+    site: siteConfig.website,
+    // base: '/dante',  <-- DELETE THIS LINE (or comment it out)
     vite: {
         plugins: [tailwindcss()],
         server: {
             fs: {
-                // Fixes the error by allowing Vite to load fonts/scripts from your parent node_modules
                 allow: ['..']
             }
         }
