@@ -4,10 +4,9 @@ import Subscribe from '../../components/Subscribe.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getAllTags, getPostsByTag, sortItemsByDateDesc } from '../../utils/data-utils';
 
-const blogPosts = await getCollection('blog');
 const gardenNotes = await getCollection('garden');
 const books = await getCollection('books');
-const posts = [...blogPosts, ...gardenNotes, ...books].sort(sortItemsByDateDesc);
+const posts = [...gardenNotes, ...books].sort(sortItemsByDateDesc);
 const tags = getAllTags(posts).sort((tagA, tagB) => {
     const postCountTagA = getPostsByTag(posts, tagA.id).length;
     const postCountTagB = getPostsByTag(posts, tagB.id).length;
@@ -22,21 +21,24 @@ const tags = getAllTags(posts).sort((tagA, tagB) => {
 >
     <h1 class="mb-12 font-serif text-2xl italic sm:mb-16 sm:text-4xl">All Tags</h1>
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-    {
-        tags.map((tag) => {
-            const postCount = getPostsByTag(posts, tag.id).length;
-            return (
-                <a class="group flex flex-col items-start gap-1 rounded-lg border border-main/20 p-4 transition hover:border-main hover:bg-main/5" href={`/tags/${tag.id}`}>
-                    <h2 class="font-serif text-lg font-medium leading-tight group-hover:underline group-hover:decoration-dashed group-hover:decoration-1 group-hover:underline-offset-4">
-                        {tag.name}
-                    </h2>
-                    <div class="text-xs text-main/70">
-                        {postCount} {postCount === 1 ? 'post' : 'posts'}
-                    </div>
-                </a>
-            );
-        })
-    }
+        {
+            tags.map((tag) => {
+                const postCount = getPostsByTag(posts, tag.id).length;
+                return (
+                    <a
+                        class="group border-main/20 hover:border-main hover:bg-main/5 flex flex-col items-start gap-1 rounded-lg border p-4 transition"
+                        href={`/tags/${tag.id}`}
+                    >
+                        <h2 class="font-serif text-lg leading-tight font-medium group-hover:underline group-hover:decoration-dashed group-hover:decoration-1 group-hover:underline-offset-4">
+                            {tag.name}
+                        </h2>
+                        <div class="text-main/70 text-xs">
+                            {postCount} {postCount === 1 ? 'post' : 'posts'}
+                        </div>
+                    </a>
+                );
+            })
+        }
     </div>
     <Subscribe class="my-16 sm:my-24" />
 </BaseLayout>

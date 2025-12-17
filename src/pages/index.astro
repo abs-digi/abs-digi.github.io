@@ -6,29 +6,27 @@ import siteConfig from '../data/site-config';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 // Fetch Digital Garden Notes (garden collection)
-const gardenNotes = (await getCollection('garden')).sort((a, b) =>
-    new Date(b.data.created).getTime() - new Date(a.data.created).getTime()
-);
+const gardenNotes = (await getCollection('garden')).sort((a, b) => new Date(b.data.created).getTime() - new Date(a.data.created).getTime());
 const featuredGardenNotes = gardenNotes.slice(0, 4);
 ---
 
 <BaseLayout description={siteConfig.description}>
     <Hero {...siteConfig.hero} />
-    
+
     {/* Digital Garden Notes Section */}
     {
         featuredGardenNotes?.length > 0 && (
             <div class="mb-20 sm:mb-28">
-                <div class="flex items-center mb-10 sm:mb-14">
-                    <div class="h-px flex-grow bg-[var(--border-main)]"></div>
-                    <h2 class="font-serif text-2xl sm:text-3xl font-medium px-6 text-[var(--accent)]">Digital Garden Notes</h2>
-                    <div class="h-px flex-grow bg-[var(--border-main)]"></div>
+                <div class="mb-10 flex items-center sm:mb-14">
+                    <div class="h-px flex-grow bg-[var(--border-main)]" />
+                    <h2 class="px-6 font-serif text-2xl font-medium text-[var(--accent)] sm:text-3xl">Digital Garden Notes</h2>
+                    <div class="h-px flex-grow bg-[var(--border-main)]" />
                 </div>
                 <div class="grid gap-8 sm:gap-10">
                     {featuredGardenNotes.map((note) => (
                         <article class="border-b border-[var(--border-main)] pb-10">
                             <h3 class="font-serif text-xl leading-tight font-medium sm:text-2xl">
-                                <a href={`/digital-garden/${note.id}/`} class="hover:underline hover:decoration-dashed hover:decoration-1 hover:underline-offset-4">
+                                <a href={`/garden/${note.id}/`} class="hover:underline hover:decoration-dashed hover:decoration-1 hover:underline-offset-4">
                                     {note.data.title}
                                 </a>
                             </h3>
@@ -38,30 +36,29 @@ const featuredGardenNotes = gardenNotes.slice(0, 4);
                                 </time>
                                 {note.data.updated && (
                                     <span class="ml-2">
-                                        (Updated <time datetime={note.data.updated.toISOString()}>
+                                        (Updated{' '}
+                                        <time datetime={note.data.updated.toISOString()}>
                                             {new Date(note.data.updated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                                        </time>)
+                                        </time>
+                                        )
                                     </span>
                                 )}
                             </div>
-                            {note.data.description && (
-                                <p class="mt-3 text-sm leading-normal text-[var(--text-main)] opacity-90">
-                                    {note.data.description}
-                                </p>
-                            )}
+                            {note.data.description && <p class="mt-3 text-sm leading-normal text-[var(--text-main)] opacity-90">{note.data.description}</p>}
                             <div class="mt-4">
-                                <a href={`/digital-garden/${note.id}/`} class="text-sm font-serif italic text-[var(--accent)] hover:underline">
+                                <a href={`/garden/${note.id}/`} class="font-serif text-sm text-[var(--accent)] italic hover:underline">
                                     Read note →
                                 </a>
                             </div>
                         </article>
                     ))}
                 </div>
-                <div class="mt-14 sm:mt-18 text-center">
-                    <Button href="/digital-garden" variant="outline">Browse All Notes →</Button>
+                <div class="mt-14 text-center sm:mt-18">
+                    <Button href="/garden" variant="outline">
+                        Browse All Notes →
+                    </Button>
                 </div>
             </div>
         )
     }
-
 </BaseLayout>

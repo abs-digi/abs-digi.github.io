@@ -2,7 +2,7 @@ import { type CollectionEntry } from 'astro:content';
 import { slugify } from './common-utils';
 
 // Add this type union
-type TaggedPost = CollectionEntry<'blog'> | CollectionEntry<'garden'> | CollectionEntry<'books'>;
+type TaggedPost = CollectionEntry<'garden'> | CollectionEntry<'books'>;
 type BookEntry = CollectionEntry<'books'>;
 
 // Helper function to get the date from different collection types

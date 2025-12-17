@@ -1,7 +1,7 @@
 // 1. IMPORT YOUR IMAGES HERE
 // Note: We use the relative path to where the files are located in src/assets/images/books/book/
-import avatarImage from '../assets/images/book/555b.png';
 import heroImage from '../assets/images/book/555.png';
+import avatarImage from '../assets/images/book/555b.png';
 import type { SiteConfig } from '../types';
 
 const siteConfig: SiteConfig = {
@@ -20,7 +20,7 @@ const siteConfig: SiteConfig = {
     },
     headerNavLinks: [
         { text: 'Home', href: '/' },
-        { text: 'Digital Garden', href: '/digital-garden' },
+        { text: 'Garden', href: '/garden' },
         { text: 'Tags', href: '/tags' },
         { text: 'Books', href: '/books' },
         { text: 'Links', href: '/links' },

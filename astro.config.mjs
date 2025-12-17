@@ -6,7 +6,8 @@ import siteConfig from './src/data/site-config';
 
 // https://astro.build/config
 export default defineConfig({
-    site: siteConfig.website,
+    site: 'https://abs-digi.codeberg.page',
+    base: 'pages',    
     vite: {
         plugins: [tailwindcss()],
         server: {

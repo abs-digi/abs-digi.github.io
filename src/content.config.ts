@@ -53,51 +53,8 @@ const books = defineCollection({
   }),
 });
 
-// 3. Blog
-const blog = defineCollection({
-    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
-    schema: ({ image }) =>
-        z.object({
-            title: z.string(),
-            excerpt: z.string().optional(),
-            publishDate: z.coerce.date(),
-            updatedDate: z.coerce.date().optional(),
-            isFeatured: z.boolean().default(false),
-            tags: z.array(z.string()).default([]),
-            status: z.enum(['🌱 seedling', '🌿 budding', '🌳 evergreen']).default('🌱 seedling'),
-            seo: seoSchema(image).optional()
-        })
-});
-
-// 4. Projects (Digital Garden Portfolio items)
-const projects = defineCollection({
-    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/digital-garden' }),
-    schema: ({ image }) =>
-        z.object({
-            title: z.string(),
-            description: z.string().optional(),
-            publishDate: z.coerce.date(),
-            isFeatured: z.boolean().default(false),
-            tags: z.array(z.string()).default([]),
-            status: z.enum(['🌱 seedling', '🌿 budding', '🌳 evergreen']).default('🌱 seedling'),
-            seo: seoSchema(image).optional()
-        })
-});
-
-// 5. Pages
-const pages = defineCollection({
-    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/pages' }),
-    schema: ({ image }) =>
-        z.object({
-            title: z.string(),
-            seo: seoSchema(image).optional()
-        })
-});
-
 // --- SINGLE EXPORT ---
 export const collections = {
   garden,
-  books,
-  projects,
-  pages
+  books
 };

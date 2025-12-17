@@ -8,42 +8,40 @@ const { post, class: className } = Astro.props;
 const { title, description, created, updated, tags, status } = post.data;
 
 // Maggie Appleton Style: Growth Icons based on status field (garden collection uses 'seedling', 'budding', 'evergreen')
-const icon = status === 'seedling' ? '🌱'
-    : status === 'evergreen' ? '🌳'
-    : '🌿'; // Default to budding
+const icon = status === 'seedling' ? '🌱' : status === 'evergreen' ? '🌳' : '🌿'; // Default to budding
 ---
 
-<article class:list={["group relative h-full", className]}>
-    <a href={`/digital-garden/${post.id}/`} class="absolute inset-0 z-10"></a>
-    <div class="flex flex-col h-full rounded-xl border-2 border-[var(--border-main)] bg-[var(--bg-main)] p-6 transition-all hover:border-[var(--accent)] hover:shadow-lg hover:-translate-y-1">
+<article class:list={['group relative h-full', className]}>
+    <a href={`/garden/${post.id}/`} class="absolute inset-0 z-10"></a>
+    <div
+        class="flex h-full flex-col rounded-xl border-2 border-[var(--border-main)] bg-[var(--bg-main)] p-6 transition-all hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-lg"
+    >
         <div class="mb-4 flex items-center justify-between">
             <span class="text-3xl">{icon}</span>
-            <span class="text-xs font-serif italic text-[var(--accent-light)]">
+            <span class="font-serif text-xs text-[var(--accent-light)] italic">
                 <FormattedDate date={created} />
             </span>
         </div>
-        
-        <h3 class="mb-3 font-serif text-2xl font-medium leading-tight text-[var(--text-main)] group-hover:text-[var(--accent)] transition-colors">
+
+        <h3 class="mb-3 font-serif text-2xl leading-tight font-medium text-[var(--text-main)] transition-colors group-hover:text-[var(--accent)]">
             {title}
         </h3>
 
-        {description && (
-            <p class="mb-6 flex-grow text-sm leading-relaxed text-[var(--text-main)] opacity-90 line-clamp-3">
-                {description}
-            </p>
-        )}
+        {description && <p class="mb-6 line-clamp-3 flex-grow text-sm leading-relaxed text-[var(--text-main)] opacity-90">{description}</p>}
 
-        {tags.length > 0 && (
-            <div class="mt-auto flex flex-wrap gap-2">
-                {tags.slice(0, 3).map(tag => (
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-[var(--bg-muted)] text-[var(--accent)] border border-[var(--border-main)]">
-                        {tag}
-                    </span>
-                ))}
-            </div>
-        )}
-        <div class="mt-6 pt-4 border-t border-[var(--border-main)] text-right">
-            <span class="text-xs font-handwritten text-[var(--accent)]">Explore note →</span>
+        {
+            tags.length > 0 && (
+                <div class="mt-auto flex flex-wrap gap-2">
+                    {tags.slice(0, 3).map((tag) => (
+                        <span class="rounded-full border border-[var(--border-main)] bg-[var(--bg-muted)] px-3 py-1 text-xs font-medium text-[var(--accent)]">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )
+        }
+        <div class="mt-6 border-t border-[var(--border-main)] pt-4 text-right">
+            <span class="font-handwritten text-xs text-[var(--accent)]">Explore note →</span>
         </div>
     </div>
 </article>
