@@ -21,7 +21,7 @@ author: 'J.R.R. Tolkien'
 # Rating from 1-5 stars
 rating: 5
 # Date you finished reading (supports various date formats)
-dateRead: 2024-12-16
+# dateRead: 2024-12-16
 # Cover image path relative to src/assets/
 # Example: ../../assets/images/rrt/1 (1).jpg
 cover: ../../assets/images/rrt/1 (1).jpg
@@ -46,7 +46,11 @@ Write your review here using Markdown.
 
 In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a hobbit-hole, and that means comfort.
 
-> "A great quote from the book would go here."
+> All that is gold does not glitter,
+Not all those who wander are lost;
+The old that is strong does not wither,
+Deep roots are not reached by the frost.
+   by: J.R.R. Tolkien
 
 ## Rating Explanation
 

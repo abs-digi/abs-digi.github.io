@@ -53,26 +53,6 @@ const books = defineCollection({
   }),
 });
 
-
-
-
-
-
-// ... inside content.config.ts
-// 2. Library (Your Books)
-//const books = defineCollection({
-  //loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/books' }),
-  //schema: ({ image }) => z.object({  // ensure ({ image }) is here
-   // title: z.string(),
-   // author: z.string(),
-   // cover: image().refine((img) => img.width >= 100, {
-   //     message: "Cover image must be at least 100px wide.",
-   // }).optional(),
-   // rating: z.number().min(1).max(5).optional(),
-   // dateRead: z.coerce.date().optional(),
- // }),
-//});
-
 // 3. Blog
 const blog = defineCollection({
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
@@ -118,7 +98,6 @@ const pages = defineCollection({
 export const collections = {
   garden,
   books,
-  blog,
   projects,
   pages
 };

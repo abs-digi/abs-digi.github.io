@@ -1,8 +1,8 @@
 ---
 title: My First Post
-excerpt: My First Post
-publishDate: 'August 8 2024'
-status: '🌱 seedling'
+description: My First Post
+created: '2024-08-08'
+status: 'seedling'
 tags:
   - Personal
   - Update

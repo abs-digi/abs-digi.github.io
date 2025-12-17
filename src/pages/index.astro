@@ -2,14 +2,8 @@
 import { getCollection } from 'astro:content';
 import Button from '../components/Button.astro';
 import Hero from '../components/Hero.astro';
-import PostPreview from '../components/PostPreview.astro';
 import siteConfig from '../data/site-config';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { sortItemsByDateDesc } from '../utils/data-utils';
-
-// Fetch Blog Posts
-const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
-const featuredPosts = posts.slice(0, 4);
 
 // Fetch Digital Garden Notes (garden collection)
 const gardenNotes = (await getCollection('garden')).sort((a, b) =>
@@ -70,24 +64,4 @@ const featuredGardenNotes = gardenNotes.slice(0, 4);
         )
     }
 
-    {/* Blog Section */}
-    {
-        featuredPosts?.length > 0 && (
-            <div class="mb-20 sm:mb-28">
-                <div class="flex items-center mb-10 sm:mb-14">
-                    <div class="h-px flex-grow bg-[var(--border-main)]"></div>
-                    <h2 class="font-serif text-2xl sm:text-3xl font-medium px-6 text-[var(--accent)]">Blog</h2>
-                    <div class="h-px flex-grow bg-[var(--border-main)]"></div>
-                </div>
-                <div class="grid gap-8 sm:gap-10">
-                    {featuredPosts.map((post) => (
-                        <PostPreview post={post} class="reveal" headingLevel="h3" />
-                    ))}
-                </div>
-                <div class="mt-14 sm:mt-18 text-center">
-                    <Button href="/blog" variant="outline">Read All Posts →</Button>
-                </div>
-            </div>
-        )
-    }
 </BaseLayout>

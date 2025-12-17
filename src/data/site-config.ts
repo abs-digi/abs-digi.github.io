@@ -21,7 +21,6 @@ const siteConfig: SiteConfig = {
     headerNavLinks: [
         { text: 'Home', href: '/' },
         { text: 'Digital Garden', href: '/digital-garden' },
-        { text: 'Blog', href: '/blog' },
         { text: 'Tags', href: '/tags' },
         { text: 'Books', href: '/books' },
         { text: 'Links', href: '/links' },

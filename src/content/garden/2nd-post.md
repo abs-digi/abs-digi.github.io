@@ -1,8 +1,8 @@
 ---
-title: My Second Blog Post
-excerpt: Second Blog Post.
-publishDate: 'December 10 2024'
-status: '🌱 seedling'
+title: My Second Post
+description: Second Post.
+created: '2024-12-10'
+status: 'seedling'
 tags:
   - Personal
   - Update

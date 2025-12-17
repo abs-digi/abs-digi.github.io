@@ -21,7 +21,7 @@ author: 'Joe Abercrombie'
 # Rating from 1-5 stars
 rating: 4
 # Date you finished reading (supports various date formats)
-dateRead: 2024-12-16
+# dateRead: 2024-12-16
 # Cover image path relative to src/assets/
 # Example: ../../assets/images/rrt/1 (1).jpg
 cover: ../../assets/images/ja/1 (1).jpg
