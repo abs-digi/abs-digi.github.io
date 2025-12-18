@@ -29,6 +29,7 @@ cover: ../../assets/images/rrt/1 (1).jpg
 tags:
   - Fantasy
   - Adventure
+  - Tolkien
 ---
 
 # Your Book Review Content

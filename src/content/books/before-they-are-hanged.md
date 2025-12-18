@@ -29,6 +29,7 @@ cover: ../../assets/images/ja/1 (1).jpg
 tags:
   - Fantasy
   - Dark Fantasy
+  - Joe Abercrombie
 ---
 
 # Your Book Review Content

@@ -2,15 +2,33 @@
 
 ---
 
-<button id="theme-toggle" class="-mr-2 flex h-8 w-8 cursor-pointer items-center justify-center" aria-label="Change color scheme">
+<button
+    id="theme-toggle"
+    class="-mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md transition-colors hover:bg-[var(--bg-muted)]"
+    aria-label="Toggle theme"
+>
     <!-- Sun icon (visible in dark mode) -->
-    <svg class="sun-icon h-5 w-5 fill-current transition-transform duration-300 hover:rotate-12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="5"/>
-        <path d="M12 1v6m0 6v6m8.66-8.66l-4.24 4.24m-4.24 0L7.34 7.34m12.02 0l-4.24 4.24m-4.24 0L7.34 16.66M23 12h-6m-6 0H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <svg
+        class="sun-icon h-6 w-6 stroke-current transition-transform duration-300 hover:rotate-45"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
     </svg>
     <!-- Moon icon (visible in light mode) -->
-    <svg class="moon-icon h-5 w-5 fill-current transition-transform duration-300 hover:-rotate-12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    <svg class="moon-icon h-6 w-6 fill-current transition-transform duration-300 hover:rotate-12" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
 </button>
 
@@ -22,7 +40,7 @@
     .moon-icon {
         display: block;
     }
-    
+
     :global(.dark) .sun-icon {
         display: block;
     }

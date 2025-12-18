@@ -25,6 +25,9 @@ dateRead: 2024-12-16
 # Cover image path relative to src/assets/
 # Example: ../../assets/images/rrt/1 (1).jpg
 cover: ../../assets/images/rrt/1 (1).jpg
+tags:
+    - tags here
+    - tags there
 ---
 
 # Your Book Review Content

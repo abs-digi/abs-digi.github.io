@@ -8,6 +8,17 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Base font size increased for better readability */
+html {
+    font-size: 18px;
+}
+
+@media (min-width: 640px) {
+    html {
+        font-size: 19px;
+    }
+}
+
 :root {
     --text-main: #2a2a2a;
     --bg-main: #f9f7f4;

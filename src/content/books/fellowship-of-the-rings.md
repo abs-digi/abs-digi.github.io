@@ -25,6 +25,10 @@ rating: 5
 # Cover image path relative to src/assets/
 # Example: ../../assets/images/rrt/1 (1).jpg
 cover: ../../assets/images/rrt/1 (3).jpg
+tags:
+   - Adventure
+   - Fantasy
+   - Tolkien
 ---
 
 # Your Book Review Content
