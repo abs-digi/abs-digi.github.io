@@ -49,6 +49,20 @@
     }
 </style>
 
+<script is:inline>
+    // Set theme ASAP to prevent flash
+    (function () {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else if (savedTheme === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+    })();
+</script>
+
 <script>
     import tippy from 'tippy.js';
     import 'tippy.js/dist/tippy.css';
@@ -58,6 +72,12 @@
         const htmlElement = document.documentElement;
 
         if (!themeToggle) return;
+
+        // Remove old event listeners if they exist
+        const oldToggle = (themeToggle as any)._themeToggleHandler;
+        if (oldToggle) {
+            themeToggle.removeEventListener('click', oldToggle);
+        }
 
         // Initialize Tippy instance
         const tippyInstance = tippy(themeToggle, {
@@ -84,21 +104,15 @@
             updateTheme(); // Update tooltip content after theme change
         };
 
-        // Set initial theme based on localStorage or system preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            htmlElement.classList.add('dark');
-        } else if (savedTheme === 'light') {
-            htmlElement.classList.remove('dark');
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            htmlElement.classList.add('dark');
-        }
-
         updateTheme(); // Set initial tooltip content
+
+        // Store reference to handler for cleanup
+        (themeToggle as any)._themeToggleHandler = toggleTheme;
         themeToggle.addEventListener('click', toggleTheme);
     }
 
-    // Run setup on page load and Astro's page navigation
+    // Run setup on both initial load and Astro's page navigation
+    setupThemeToggle();
     document.addEventListener('astro:page-load', setupThemeToggle);
 </script>
 
