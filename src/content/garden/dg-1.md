@@ -2,18 +2,14 @@
 title: 'Phases of Growth'
 description: Planting the Garden.
 created: '2025-12-08'
-status: 'seedling'
+status: 'seeds'
 tags:
   - Garden
   - Update
 ---
 
-
-
-the three phases (statuses) defined for the digital garden pages are:
-
-    🌱 seedling (Default status)
-
-    🌿 budding
-
-    🌳 evergreen
+🌱 Updated Icon Mapping:
+GardenCard.astro & GardenBadge.astro:
+seeds → 🌱 (seedling sprout)
+trees → 🌳 (mature tree)
+fruit → 🍎 (ripe fruit)

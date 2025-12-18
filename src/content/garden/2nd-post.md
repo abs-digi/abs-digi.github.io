@@ -2,7 +2,7 @@
 title: My Second Post
 description: Second Post.
 created: '2024-12-10'
-status: 'seedling'
+status: 'seeds'
 tags:
   - Personal
   - Update

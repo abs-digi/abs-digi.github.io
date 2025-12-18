@@ -2,7 +2,7 @@
 title: My Third Post
 description: My third Post
 created: '2025-12-09'
-status: 'seedling'
+status: 'seeds'
 tags:
   - Personal
   - Update

@@ -2,7 +2,7 @@
 title: 'Git Commands & Repository Setup'
 description: Git Commands & Website Setup
 created: '2025-12-11'
-status: 'seedling'
+status: 'seeds'
 tags:
   - Git
   - Website

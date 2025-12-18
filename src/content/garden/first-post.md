@@ -2,7 +2,7 @@
 title: My First Post
 description: My First Post
 created: '2024-08-08'
-status: 'seedling'
+status: 'seeds'
 tags:
   - Personal
   - Update

@@ -23,7 +23,7 @@ const garden = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/garden' }),
   schema: z.object({
     title: z.string(),
-    status: z.enum(['seedling', 'budding', 'evergreen']).default('seedling'),
+    status: z.enum(['seeds', 'trees', 'fruit']).default('seeds'),
     // FIXED: Use coerce.date() to allow strings like "Dec 16 2025"
     created: z.coerce.date(), 
     updated: z.coerce.date().optional(),

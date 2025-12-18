@@ -2,7 +2,7 @@
 title: "Contemplating SSG's"
 description: Troubleshooting
 created: '2025-12-14'
-status: 'seedling'
+status: 'seeds'
 tags:
   - SSG
   - Website

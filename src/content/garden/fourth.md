@@ -2,7 +2,7 @@
 title: 12-12-25
 description: Domain name update
 created: '2025-12-12'
-status: 'seedling'
+status: 'seeds'
 tags:
   - Personal
   - Update

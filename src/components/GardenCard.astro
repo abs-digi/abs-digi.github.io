@@ -7,8 +7,8 @@ type Props = { post: CollectionEntry<'garden'>; class?: string };
 const { post, class: className } = Astro.props;
 const { title, description, created, updated, tags, status } = post.data;
 
-// Maggie Appleton Style: Growth Icons based on status field (garden collection uses 'seedling', 'budding', 'evergreen')
-const icon = status === 'seedling' ? '🌱' : status === 'evergreen' ? '🌳' : '🌿'; // Default to budding
+// Maggie Appleton Style: Growth Icons based on status field (garden collection uses 'seeds', 'trees', 'fruit')
+const icon = status === 'seeds' ? '🌱' : status === 'trees' ? '🌳' : '🍎'; // Default to fruit
 ---
 
 <article class:list={['group relative h-full', className]}>

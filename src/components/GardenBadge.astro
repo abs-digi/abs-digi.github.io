@@ -2,27 +2,27 @@
 // src/components/GardenBadge.astro
 
 interface Props {
-  status: 'seedling' | 'budding' | 'evergreen';
+  status: 'seeds' | 'trees' | 'fruit';
 }
 
 const { status } = Astro.props;
 
 // Configuration for each stage (Icon + Label + Color Class)
 const stages = {
-  seedling: {
+  seeds: {
     icon: '🌱',
-    label: 'Seedling',
-    className: 'badge-seedling'
+    label: 'Seeds',
+    className: 'badge-seeds'
   },
-  budding: {
-    icon: '🌿',
-    label: 'Budding',
-    className: 'badge-budding'
-  },
-  evergreen: {
+  trees: {
     icon: '🌳',
-    label: 'Evergreen',
-    className: 'badge-evergreen'
+    label: 'Trees',
+    className: 'badge-trees'
+  },
+  fruit: {
+    icon: '🍎',
+    label: 'Fruit',
+    className: 'badge-fruit'
   }
 };
 
@@ -52,39 +52,39 @@ const currentStage = stages[status];
     text-transform: none;
   }
 
-  /* 1. Seedling (New, Rough) - Soft Green/Earthy */
-  .badge-seedling {
+  /* 1. Seeds (New, Rough) - Soft Green/Earthy */
+  .badge-seeds {
     background-color: color-mix(in srgb, var(--accent-light) 15%, transparent);
     color: color-mix(in srgb, var(--accent) 80%, black);
     border-color: color-mix(in srgb, var(--accent-light) 40%, transparent);
   }
 
-  /* 2. Budding (Growing) - Vibrant Blue/Teal */
-  .badge-budding {
+  /* 2. Trees (Growing) - Vibrant Blue/Teal */
+  .badge-trees {
     background-color: color-mix(in srgb, var(--accent) 15%, transparent);
     color: color-mix(in srgb, var(--accent) 90%, black);
     border-color: color-mix(in srgb, var(--accent) 40%, transparent);
   }
 
-  /* 3. Evergreen (Polished) - Deep Forest/Gold */
-  .badge-evergreen {
+  /* 3. Fruit (Polished) - Deep Forest/Gold */
+  .badge-fruit {
     background-color: color-mix(in srgb, var(--accent-light) 20%, transparent);
     color: color-mix(in srgb, var(--accent-light) 100%, black);
     border-color: color-mix(in srgb, var(--accent-light) 50%, transparent);
   }
 
   /* Dark Mode Support */
-  :global(.dark) .badge-seedling {
+  :global(.dark) .badge-seeds {
     background-color: color-mix(in srgb, var(--accent) 20%, transparent);
     color: color-mix(in srgb, var(--accent-light) 90%, white);
     border-color: color-mix(in srgb, var(--accent) 40%, transparent);
   }
-  :global(.dark) .badge-budding {
+  :global(.dark) .badge-trees {
     background-color: color-mix(in srgb, var(--accent-light) 20%, transparent);
     color: color-mix(in srgb, var(--accent-light) 100%, white);
     border-color: color-mix(in srgb, var(--accent-light) 40%, transparent);
   }
-  :global(.dark) .badge-evergreen {
+  :global(.dark) .badge-fruit {
     background-color: color-mix(in srgb, var(--accent) 25%, transparent);
     color: color-mix(in srgb, var(--accent) 100%, white);
     border-color: color-mix(in srgb, var(--accent) 50%, transparent);

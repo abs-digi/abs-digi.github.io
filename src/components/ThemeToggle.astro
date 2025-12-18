@@ -48,3 +48,91 @@
         display: none;
     }
 </style>
+
+<script>
+    import tippy from 'tippy.js';
+    import 'tippy.js/dist/tippy.css';
+
+    function setupThemeToggle() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        if (!themeToggle) return;
+
+        // Initialize Tippy instance
+        const tippyInstance = tippy(themeToggle, {
+            content: '', // Initial content will be set dynamically
+            placement: 'bottom',
+            theme: 'custom',
+            arrow: true
+        });
+
+        const updateTheme = () => {
+            const isDarkMode = htmlElement.classList.contains('dark');
+            themeToggle.setAttribute('aria-label', isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
+            tippyInstance.setContent(isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
+        };
+
+        const toggleTheme = () => {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateTheme(); // Update tooltip content after theme change
+        };
+
+        // Set initial theme based on localStorage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark');
+        } else if (savedTheme === 'light') {
+            htmlElement.classList.remove('dark');
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            htmlElement.classList.add('dark');
+        }
+
+        updateTheme(); // Set initial tooltip content
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    // Run setup on page load and Astro's page navigation
+    document.addEventListener('astro:page-load', setupThemeToggle);
+</script>
+
+<style is:global>
+    /* Custom tippy theme to match site colors */
+    .tippy-box[data-theme~='custom'] {
+        background-color: var(--bg-muted);
+        color: var(--text-main);
+        border: 1px solid var(--border-main);
+        font-size: 0.875rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before {
+        border-top-color: var(--border-main);
+    }
+
+    .tippy-box[data-theme~='custom'][data-placement^='bottom'] > .tippy-arrow::before {
+        border-bottom-color: var(--border-main);
+    }
+
+    .tippy-box[data-theme~='custom'] > .tippy-arrow::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+    }
+
+    .tippy-box[data-theme~='custom'][data-placement^='bottom'] > .tippy-arrow::after {
+        border-bottom-color: var(--bg-muted);
+        top: -7px;
+        left: 0;
+        border-width: 0 8px 8px;
+        border-style: solid;
+        border-color: transparent;
+        border-bottom-color: var(--bg-muted);
+    }
+</style>

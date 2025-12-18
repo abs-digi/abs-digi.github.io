@@ -2,7 +2,7 @@
 title: 'Getting Astro Files to Build in Github'
 description: Troubleshooting
 created: '2025-12-13'
-status: 'seedling'
+status: 'seeds'
 tags:
   - Github
   - Astro
