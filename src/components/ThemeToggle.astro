@@ -50,15 +50,18 @@
 </style>
 
 <script is:inline>
-    // Set theme ASAP to prevent flash
+    // Set theme ASAP to prevent flash - runs on initial page load
     (function () {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             document.documentElement.classList.add('dark');
-        } else if (savedTheme === 'light') {
+        } else {
+            // Default to light mode (remove dark class)
             document.documentElement.classList.remove('dark');
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
+            // Save default if not already saved
+            if (!savedTheme) {
+                localStorage.setItem('theme', 'light');
+            }
         }
     })();
 </script>
@@ -67,17 +70,32 @@
     import tippy from 'tippy.js';
     import 'tippy.js/dist/tippy.css';
 
-    function setupThemeToggle() {
-        const themeToggle = document.getElementById('theme-toggle');
+    // Load theme on every page navigation
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('theme');
         const htmlElement = document.documentElement;
 
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+
+        console.log('Theme loaded:', savedTheme || 'light (default)');
+    }
+
+    function setupThemeToggle() {
+        const themeToggle = document.getElementById('theme-toggle');
         if (!themeToggle) return;
 
-        // Remove old event listeners if they exist
-        const oldToggle = (themeToggle as any)._themeToggleHandler;
-        if (oldToggle) {
-            themeToggle.removeEventListener('click', oldToggle);
-        }
+        const htmlElement = document.documentElement;
+
+        // Load the saved theme first
+        loadTheme();
+
+        // Check if already initialized to prevent duplicate listeners
+        if ((themeToggle as any)._initialized) return;
+        (themeToggle as any)._initialized = true;
 
         // Initialize Tippy instance
         const tippyInstance = tippy(themeToggle, {
@@ -87,33 +105,38 @@
             arrow: true
         });
 
-        const updateTheme = () => {
+        const updateTooltip = () => {
             const isDarkMode = htmlElement.classList.contains('dark');
-            themeToggle.setAttribute('aria-label', isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
-            tippyInstance.setContent(isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
+            const text = isDarkMode ? 'Switch to light mode' : 'Switch to dark mode';
+            themeToggle.setAttribute('aria-label', text);
+            tippyInstance.setContent(text);
         };
 
         const toggleTheme = () => {
-            if (htmlElement.classList.contains('dark')) {
+            const isDark = htmlElement.classList.contains('dark');
+
+            if (isDark) {
                 htmlElement.classList.remove('dark');
                 localStorage.setItem('theme', 'light');
+                console.log('Theme changed to: light');
             } else {
                 htmlElement.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
+                console.log('Theme changed to: dark');
             }
-            updateTheme(); // Update tooltip content after theme change
+
+            updateTooltip();
         };
 
-        updateTheme(); // Set initial tooltip content
-
-        // Store reference to handler for cleanup
-        (themeToggle as any)._themeToggleHandler = toggleTheme;
+        updateTooltip(); // Set initial tooltip content
         themeToggle.addEventListener('click', toggleTheme);
     }
 
-    // Run setup on both initial load and Astro's page navigation
-    setupThemeToggle();
+    // Run setup on page load - this fires on every navigation
     document.addEventListener('astro:page-load', setupThemeToggle);
+
+    // Also run on after-swap to ensure theme persists during navigation
+    document.addEventListener('astro:after-swap', loadTheme);
 </script>
 
 <style is:global>

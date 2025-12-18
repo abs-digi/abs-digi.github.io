@@ -4,6 +4,7 @@ import BaseHead, { type Props as HeadProps } from '../components/BaseHead.astro'
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Nav from '../components/Nav.astro';
+import bookBackground from '../assets/images/book-background.png';
 
 export type Props = HeadProps & { showHeader?: boolean };
 
@@ -16,7 +17,7 @@ const { showHeader = true, ...head } = Astro.props;
         <BaseHead {...head} />
         <ClientRouter />
     </head>
-    <body class="bg-main text-main font-sans">
+    <body class="text-main font-sans" style={`background-image: url(${bookBackground.src})`}>
         <div class="flex min-h-screen flex-col px-4 md:px-8 lg:px-12">
             <Nav />
             {showHeader && <Header />}
