@@ -19,7 +19,7 @@ cd into the folder.
 git config --global user.name "your-name"
 ```
 
-### For your communications
+### posted with your commits
 ```bash
 git config --global user.email "your-email"
 ```
@@ -29,12 +29,12 @@ git config --global user.email "your-email"
 git config --global color.ui auto
 ```
 
-### To establish it is a git file
+### To establish a local repository on your pc
 ```bash
 git init
 ```
 
-### Establish the remote
+### Establish the remote repository
 ```bash
 git remote add origin [https://github.com/your-username/your-repo-name.git]
 ```
