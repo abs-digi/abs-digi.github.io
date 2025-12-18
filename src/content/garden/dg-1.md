@@ -1,7 +1,7 @@
 ---
 title: 'Phases of Growth'
 description: Planting the Garden.
-created: '2024-12-08'
+created: '2025-12-08'
 status: 'seedling'
 tags:
   - Garden
