@@ -1,7 +1,7 @@
 ---
 # BOOK REVIEW TEMPLATE
 # ====================
-# 
+#
 # WHERE TO PUT BOOK REVIEWS:
 # --------------------------
 # 1. Create a new Markdown file in `src/content/books/`
@@ -48,10 +48,10 @@ Write your review here using Markdown.
 In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a hobbit-hole, and that means comfort.
 
 > All that is gold does not glitter,
-Not all those who wander are lost;
-The old that is strong does not wither,
-Deep roots are not reached by the frost.
-   by: J.R.R. Tolkien
+> Not all those who wander are lost;
+> The old that is strong does not wither,
+> Deep roots are not reached by the frost.
+> by: J.R.R. Tolkien
 
 ## Rating Explanation
 

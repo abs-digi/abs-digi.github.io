@@ -37,13 +37,13 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(249, 247, 244, 0.75); /* Light mode overlay - reduced to 75% for better visibility */
+    background-color: rgba(249, 247, 244, 0.9); /* Light mode overlay - darker for better readability */
     z-index: -1;
     pointer-events: none;
 }
 
 html.dark body::before {
-    background-color: rgba(26, 26, 26, 0.75); /* Dark mode overlay - reduced to 75% */
+    background-color: rgba(26, 26, 26, 0.9); /* Dark mode overlay - darker for better readability */
 }
 
 :root {
@@ -79,30 +79,26 @@ html.dark {
 }
 */
 
-
-
 /* dante/src/styles/global.css */
 .prose table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 2rem 0;
-  font-size: 0.95em;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95em;
 }
 
 .prose th {
-  text-align: left;
-  padding: 0.75rem;
-  border-bottom: 2px solid var(--border-main);
-  font-family: var(--font-serif);
-  font-style: italic;
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 2px solid var(--border-main);
+    font-family: var(--font-serif);
+    font-style: italic;
 }
 
 .prose td {
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--border-muted);
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-muted);
 }
-
-
 
 /* Green */
 /*
@@ -155,7 +151,7 @@ html.dark {
     }
 
     .prose a {
-        @apply underline font-normal decoration-1 underline-offset-3 decoration-dotted hover:decoration-solid hover:text-[var(--accent)] transition-colors;
+        @apply font-normal underline decoration-dotted decoration-1 underline-offset-3 transition-colors hover:text-[var(--accent)] hover:decoration-solid;
         color: var(--text-main);
     }
 
@@ -169,7 +165,7 @@ html.dark {
     }
 
     .prose h2 {
-        @apply text-3xl sm:text-4xl border-b border-[var(--border-main)] pb-2 mb-6;
+        @apply mb-6 border-b border-[var(--border-main)] pb-2 text-3xl sm:text-4xl;
     }
 
     .prose :where(code, strong) {
@@ -177,13 +173,14 @@ html.dark {
     }
 
     .prose blockquote {
-        @apply font-serif font-normal italic border-l-4 border-[var(--accent-light)] pl-6 text-[1.375em] leading-snug sm:text-[1.66667em] text-[var(--accent)];
+        @apply border-l-4 border-[var(--accent-light)] pl-6 font-serif text-[1.375em] leading-snug font-normal text-[var(--accent)] italic sm:text-[1.66667em];
         background: var(--bg-muted);
         padding: 1.5rem;
         border-radius: var(--radius-md);
     }
 
-    .prose ul, .prose ol {
+    .prose ul,
+    .prose ol {
         @apply pl-6;
     }
 
@@ -192,7 +189,7 @@ html.dark {
     }
 
     .prose hr {
-        @apply border-[var(--border-main)] my-8;
+        @apply my-8 border-[var(--border-main)];
     }
 }
 .reveal {
@@ -221,8 +218,6 @@ html.dark {
     padding: 0.5rem;
     border-bottom: 1px solid var(--border-muted);
 }
-
-
 
 /* ... existing code ... */
 
@@ -275,7 +270,10 @@ html.dark {
 /* OPTIONAL: Digital Garden Cursor */
 /* This changes the cursor to a seedling when hovering over links */
 a:hover {
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text x='0' y='24' font-size='24'>🌱</text></svg>") 16 16, pointer;
+    cursor:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text x='0' y='24' font-size='24'>🌱</text></svg>")
+            16 16,
+        pointer;
 }
 
 /* Additional utility classes */

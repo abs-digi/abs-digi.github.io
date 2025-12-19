@@ -7,6 +7,7 @@ tags:
   - Github
   - Astro
 ---
+
 This is for Astro.js SSG
 Create a new folder path in your project: .github/workflows/ (Note the dot at the start of .github)
 
@@ -20,7 +21,7 @@ name: Deploy to GitHub Pages
 on:
   # Trigger the workflow every time you push to the `main` branch
   push:
-    branches: [ main ]
+    branches: [main]
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
@@ -32,7 +33,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -44,9 +45,9 @@ jobs:
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         # with:
-          # path: . # The root location of your Astro project inside the repository. (optional)
-          # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
-          # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
+        # path: . # The root location of your Astro project inside the repository. (optional)
+        # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
+        # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
 
   deploy:
     needs: build
@@ -58,3 +59,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+```

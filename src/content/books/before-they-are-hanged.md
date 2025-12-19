@@ -1,7 +1,7 @@
 ---
 # BOOK REVIEW TEMPLATE
 # ====================
-# 
+#
 # WHERE TO PUT BOOK REVIEWS:
 # --------------------------
 # 1. Create a new Markdown file in `src/content/books/`

@@ -5,23 +5,38 @@ const title = "My Favorites";
 const description = "A curated list of websites, tools, and pages I enjoy.";
 
 // EDIT HERE: Add your own categories and links
-const bookmarks = [
+const bookmarks = [ 
     {
-        category: "News & Tech",
+        category: "Linux",
         links: [
-            { title: "Hacker News", url: "https://news.ycombinator.com", desc: "Tech news aggregator." },
-            { title: "The Verge", url: "https://www.theverge.com", desc: "Technology news and reviews." },
-            { title: "Smashing Magazine", url: "https://www.smashingmagazine.com", desc: "Web design and development." }
+            { title: "Linux Kernel Archives", url: "https://kernel.org/", desc: "Linux Kernels." },
+            { title: "Distrowatch.com", url: "https://distrowatch.com/", desc: "Linux Distros." },
+            { title: "The Linux Cast", url: "https://thelinuxcast.org/", desc: "Linux Content." }
+        ]
+    },   
+    {
+        category: "Static Site Generator's",
+        links: [
+            { title: "Eleventy/11ty", url: "https://www.11ty.dev/", desc: "Eleventy is a simpler static site generator." },
+            { title: "HUGO", url: "https://gohugo.io/", desc: "The world’s fastest framework for building websites." },
+            { title: "Jekyll", url: "https://jekyllrb.com/", desc: "Transform your plain text into static websites and blogs." },
+            { title: "Astro.js", url: "https://astro.build/", desc: "The web framework for content-driven websites." },
         ]
     },  
     {
-        category: "News & Tech",
+        category: "Obsidian",
         links: [
-            { title: "Hacker News", url: "https://news.ycombinator.com", desc: "Tech news aggregator." },
-            { title: "The Verge", url: "https://www.theverge.com", desc: "Technology news and reviews." },
-            { title: "Smashing Magazine", url: "https://www.smashingmagazine.com", desc: "Web design and development." }
+            { title: "Obsidian", url: "https://obsidian.md/", desc: "Sharpen your thinking. The free and flexible app for your private thoughts." },
+            { title: "Obisidian Garden Gallery", url: "https://vaults.obsidian-community.com/", desc: "Obsidian Garden Gallery." },
         ]
-    },    
+    },  
+    {
+        category: "Digital/Mind Gardens",
+        links: [
+            { title: "Maggie Appleton's Garden", url: "https://maggieappleton.com/garden/", desc: "A collection of essays, notes, talks, podcasts, and half-baked explorations I'm always tending to." },
+            { title: "Mister Chad", url: "https://mister-chad.com/welcome/", desc: "Linux Distros." },
+        ]
+    },   
 ];
 ---
 
