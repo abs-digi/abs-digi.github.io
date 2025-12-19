@@ -226,10 +226,20 @@ const library = [
 
 <BaseLayout title={title} description={description} showHeader={true}>
     <h1 class="mb-12 font-serif text-2xl italic sm:mb-16 sm:text-4xl">{title}</h1>
-    
-    <div class="max-w-none">
+
+    {/* Search Bar */}
+    <div class="sticky top-4 z-10 mb-12">
+        <input
+            type="text"
+            id="book-search"
+            placeholder="Search books by title or author..."
+            class="w-full rounded-full border border-main bg-[var(--bg-main)] px-6 py-3 font-serif text-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+        />
+    </div>
+
+    <div id="books-container" class="max-w-none">
         {library.map((author) => (
-            <>
+            <div class="author-section" data-author={author.author.toLowerCase()}>
                 <h2 class="author-header"><a href={author.website}>{author.author}</a></h2>
                 <div class="book-grid">
                     {author.books.map((book) => {
@@ -241,7 +251,7 @@ const library = [
                         const titleAttr = internalLink ? `Read my review of ${book.title}` : `View ${book.title} on Goodreads`;
                         
                         return (
-                            <div class="book-item">
+                            <div class="book-item" data-search={`${book.title.toLowerCase()} ${author.author.toLowerCase()}`}>
                                 <a href={link} target={target} title={titleAttr}>
                                     {coverImage ? (
                                         <Image
@@ -266,12 +276,43 @@ const library = [
                         );
                     })}
                 </div>
-            </>
+            </div>
         ))}
     </div>
 
     <Subscribe class="my-16 sm:my-24" />
 </BaseLayout>
+
+<script>
+    // Client-Side Search for Books
+    const searchInput = document.getElementById('book-search');
+    const container = document.getElementById('books-container');
+
+    if (searchInput && container) {
+        searchInput.addEventListener('input', (e) => {
+            const term = (e.target as HTMLInputElement).value.toLowerCase();
+            const authorSections = container.querySelectorAll('.author-section');
+
+            authorSections.forEach((section) => {
+                const books = section.querySelectorAll('.book-item');
+                let hasVisibleBooks = false;
+
+                books.forEach((book) => {
+                    const searchText = book.getAttribute('data-search') || '';
+                    if (searchText.includes(term)) {
+                        (book as HTMLElement).style.display = 'block';
+                        hasVisibleBooks = true;
+                    } else {
+                        (book as HTMLElement).style.display = 'none';
+                    }
+                });
+
+                // Hide the entire author section if no books match
+                (section as HTMLElement).style.display = hasVisibleBooks ? 'block' : 'none';
+            });
+        });
+    }
+</script>
 
 <style>
     /* CSS Grid Layout */
