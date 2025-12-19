@@ -1,5 +1,5 @@
 ---
-title: The Start of Logging
+title: 'The Start of Logging'
 description: The beginning of this digital garden / Book listing.
 created: '2025-12-08'
 status: 'seeds'

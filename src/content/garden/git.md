@@ -1,6 +1,6 @@
 ---
-title: 'Git Commands & Repository Setup'
-description: Git Commands & Website Setup
+title: 'Git Commands'
+description: Git Commands
 created: '2025-12-11'
 status: 'seeds'
 tags:

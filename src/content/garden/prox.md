@@ -1,6 +1,6 @@
 ---
-title: 'Linux & ProxMox Commands'
-description: Troubleshooting
+title: 'ProxMox'
+description: Proxmox
 created: '2025-12-12'
 status: 'seeds'
 tags:
