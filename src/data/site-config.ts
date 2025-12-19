@@ -11,8 +11,8 @@ const siteConfig: SiteConfig = {
         src: avatarImage, 
         alt: 'Ab'
     },
-    title: "Ab's Digital Garden",
-    subtitle: 'Digital Garden & Books',
+    title: "Ab's Website",
+    subtitle: 'Website & Books',
     description: 'Astro.js and Tailwind CSS theme for blog and portfolio by justgoodui.com',
     image: {
         src: '/dante-preview.jpg', // This is fine if dante-preview.jpg is still in public/
@@ -32,7 +32,7 @@ const siteConfig: SiteConfig = {
     ],
     hero: {
         title: 'Hi There & Welcome to My Corner of the Web!',
-        text: "Welcome to my digital garden. 🌿 I plant ideas here, water them with code, and watch them grow.",
+        text: "Welcome to my Website. 🌿 I plant ideas here, water them with code, and watch them grow.",
         image: {
             // 3. USE THE IMPORTED VARIABLE HERE
             src: heroImage,
