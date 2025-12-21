@@ -1,0 +1,284 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = 'Guestbook';
+const pageDescription = 'Sign my guestbook and leave a message!';
+---
+
+<BaseLayout description={pageDescription} title={pageTitle}>
+    <div class="mx-auto max-w-3xl">
+        <h1 class="mb-4 font-serif text-4xl font-bold leading-tight sm:text-5xl">
+            Guestbook
+        </h1>
+        <p class="mb-12 text-lg text-[var(--text-muted)]">
+            Leave a message and let me know you stopped by!
+        </p>
+
+        <!-- Sign Guestbook Form -->
+        <div class="mb-16 rounded-2xl border-2 border-[var(--border-main)] bg-[var(--bg-muted)] p-6 sm:p-8">
+            <h2 class="mb-6 font-serif text-2xl font-semibold">Sign the Guestbook</h2>
+
+            <form id="guestbook-form" class="space-y-4">
+                <div>
+                    <label for="name" class="mb-2 block text-sm font-medium text-[var(--text-main)]">
+                        Name <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        maxlength="50"
+                        class="w-full rounded-lg border border-[var(--border-main)] bg-[var(--bg-main)] px-4 py-2.5 text-[var(--text-main)] transition-colors focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
+                        placeholder="Your name"
+                    />
+                </div>
+
+                <div>
+                    <label for="email" class="mb-2 block text-sm font-medium text-[var(--text-main)]">
+                        Email <span class="text-xs text-[var(--text-muted)]">(optional, won't be displayed)</span>
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        maxlength="100"
+                        class="w-full rounded-lg border border-[var(--border-main)] bg-[var(--bg-main)] px-4 py-2.5 text-[var(--text-main)] transition-colors focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
+                        placeholder="your@email.com"
+                    />
+                </div>
+
+                <div>
+                    <label for="website" class="mb-2 block text-sm font-medium text-[var(--text-main)]">
+                        Website <span class="text-xs text-[var(--text-muted)]">(optional)</span>
+                    </label>
+                    <input
+                        type="url"
+                        id="website"
+                        name="website"
+                        maxlength="200"
+                        class="w-full rounded-lg border border-[var(--border-main)] bg-[var(--bg-main)] px-4 py-2.5 text-[var(--text-main)] transition-colors focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
+                        placeholder="https://yourwebsite.com"
+                    />
+                </div>
+
+                <div>
+                    <label for="message" class="mb-2 block text-sm font-medium text-[var(--text-main)]">
+                        Message <span class="text-red-500">*</span>
+                    </label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        required
+                        rows="4"
+                        maxlength="500"
+                        class="w-full rounded-lg border border-[var(--border-main)] bg-[var(--bg-main)] px-4 py-2.5 text-[var(--text-main)] transition-colors focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
+                        placeholder="Leave your message here..."
+                    ></textarea>
+                    <p class="mt-1 text-xs text-[var(--text-muted)]" id="char-count">0 / 500 characters</p>
+                </div>
+
+                <div id="form-message" class="hidden rounded-lg p-4 text-sm"></div>
+
+                <button
+                    type="submit"
+                    id="submit-btn"
+                    class="w-full rounded-lg bg-[var(--accent)] px-6 py-3 font-medium text-white transition-all hover:bg-[var(--accent-light)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                >
+                    Sign Guestbook
+                </button>
+            </form>
+        </div>
+
+        <!-- Guestbook Entries -->
+        <div>
+            <h2 class="mb-8 font-serif text-3xl font-semibold">Messages</h2>
+
+            <div id="loading" class="text-center py-12">
+                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[var(--accent)] border-r-transparent"></div>
+                <p class="mt-4 text-[var(--text-muted)]">Loading messages...</p>
+            </div>
+
+            <div id="entries-container" class="hidden space-y-6"></div>
+
+            <div id="empty-state" class="hidden text-center py-12">
+                <p class="text-lg text-[var(--text-muted)]">No messages yet. Be the first to sign!</p>
+            </div>
+
+            <div id="error-state" class="hidden rounded-lg border border-red-200 bg-red-50 p-6 text-center dark:border-red-900 dark:bg-red-900/20">
+                <p class="text-red-600 dark:text-red-400">Failed to load guestbook entries. Please check your Supabase configuration.</p>
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<script>
+    import { createClient } from '@supabase/supabase-js';
+
+    // IMPORTANT: Replace these with your Supabase project credentials
+    // Get these from: https://app.supabase.com/project/_/settings/api
+    const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL || '';
+    const SUPABASE_ANON_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '';
+
+    // Initialize Supabase client
+    let supabase: any = null;
+    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+        supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
+    // Character counter
+    const messageTextarea = document.getElementById('message') as HTMLTextAreaElement;
+    const charCount = document.getElementById('char-count');
+    if (messageTextarea && charCount) {
+        messageTextarea.addEventListener('input', () => {
+            const count = messageTextarea.value.length;
+            charCount.textContent = `${count} / 500 characters`;
+        });
+    }
+
+    // Load guestbook entries
+    async function loadEntries() {
+        const loading = document.getElementById('loading');
+        const container = document.getElementById('entries-container');
+        const emptyState = document.getElementById('empty-state');
+        const errorState = document.getElementById('error-state');
+
+        if (!supabase) {
+            loading?.classList.add('hidden');
+            errorState?.classList.remove('hidden');
+            return;
+        }
+
+        try {
+            const { data, error } = await supabase
+                .from('guestbook')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            loading?.classList.add('hidden');
+
+            if (error) {
+                console.error('Error loading entries:', error);
+                errorState?.classList.remove('hidden');
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                emptyState?.classList.remove('hidden');
+                return;
+            }
+
+            container?.classList.remove('hidden');
+            if (container) {
+                container.innerHTML = data.map((entry: any) => createEntryHTML(entry)).join('');
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            loading?.classList.add('hidden');
+            errorState?.classList.remove('hidden');
+        }
+    }
+
+    // Create HTML for a single entry
+    function createEntryHTML(entry: any) {
+        const date = new Date(entry.created_at).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        const websiteHTML = entry.website
+            ? `<a href="${escapeHtml(entry.website)}" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors">🔗 Website</a>`
+            : '';
+
+        return `
+            <div class="rounded-xl border border-[var(--border-main)] bg-[var(--bg-main)] p-6 transition-all hover:border-[var(--accent)]/50 hover:shadow-md">
+                <div class="mb-3 flex items-start justify-between gap-4">
+                    <div>
+                        <h3 class="font-serif text-lg font-semibold text-[var(--text-main)]">${escapeHtml(entry.name)}</h3>
+                        <p class="text-sm text-[var(--text-muted)]">${date}</p>
+                    </div>
+                    ${websiteHTML}
+                </div>
+                <p class="leading-relaxed text-[var(--text-main)]">${escapeHtml(entry.message)}</p>
+            </div>
+        `;
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHtml(text: string) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Handle form submission
+    const form = document.getElementById('guestbook-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const formMessage = document.getElementById('form-message');
+
+    if (form && submitBtn) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!supabase) {
+                showFormMessage('error', 'Supabase is not configured. Please check your environment variables.');
+                return;
+            }
+
+            // Disable form during submission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            const formData = new FormData(form);
+            const entry = {
+                name: formData.get('name') as string,
+                email: formData.get('email') as string || null,
+                website: formData.get('website') as string || null,
+                message: formData.get('message') as string,
+                created_at: new Date().toISOString()
+            };
+
+            try {
+                const { error } = await supabase
+                    .from('guestbook')
+                    .insert([entry]);
+
+                if (error) {
+                    console.error('Error submitting entry:', error);
+                    showFormMessage('error', 'Failed to submit your message. Please try again.');
+                } else {
+                    showFormMessage('success', 'Thank you for signing my guestbook! 🎉');
+                    form.reset();
+                    if (charCount) charCount.textContent = '0 / 500 characters';
+                    // Reload entries
+                    setTimeout(() => loadEntries(), 500);
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                showFormMessage('error', 'An unexpected error occurred. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign Guestbook';
+            }
+        });
+    }
+
+    function showFormMessage(type: 'success' | 'error', message: string) {
+        if (!formMessage) return;
+
+        formMessage.className = type === 'success'
+            ? 'rounded-lg p-4 text-sm bg-green-50 text-green-600 border border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-900'
+            : 'rounded-lg p-4 text-sm bg-red-50 text-red-600 border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-900';
+
+        formMessage.textContent = message;
+        formMessage.classList.remove('hidden');
+
+        setTimeout(() => {
+            formMessage.classList.add('hidden');
+        }, 5000);
+    }
+
+    // Load entries on page load
+    document.addEventListener('astro:page-load', loadEntries);
+</script>

@@ -16,6 +16,7 @@
         "@fontsource-variable/inter": "^5.2.8",
         "@fontsource-variable/newsreader": "^5.2.10",
         "@fontsource/caveat": "^5.2.8",
+        "@supabase/supabase-js": "^2.89.0",
         "@tailwindcss/vite": "^4.1.17",
         "astro": "^5.15.9",
         "marked": "^17.0.0",
