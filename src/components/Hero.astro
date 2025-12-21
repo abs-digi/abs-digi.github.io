@@ -16,7 +16,7 @@ const { title, image, text, actions } = Astro.props;
                 <div class="mx-auto w-full max-w-4xl px-4 md:px-8">
                     <h1 class="font-serif text-4xl leading-tight font-medium sm:text-6xl sm:leading-tight text-center">
                         {title}
-                        <span class="block mt-4 font-handwritten text-2xl sm:text-3xl text-[var(--accent)]">
+                        <span class="block mt-4 text-xl sm:text-2xl text-[var(--accent)] font-normal">
                             A Website by Ab
                         </span>
                     </h1>
@@ -24,7 +24,7 @@ const { title, image, text, actions } = Astro.props;
             )}
             
             {image?.src && (
-                <figure class="w-full sketchy-border max-w-2xl mx-auto">
+                <figure class="w-full max-w-2xl mx-auto rounded-2xl overflow-hidden border border-[var(--border-main)] shadow-lg">
                     <CustomImage
                         class="mx-auto h-auto w-auto max-w-full object-contain"
                         {...image}
@@ -35,7 +35,7 @@ const { title, image, text, actions } = Astro.props;
                     />
                     {image.caption && (
                         <div class="mx-auto w-full max-w-3xl px-4 md:px-8">
-                            <figcaption class="mt-3 text-sm font-handwritten text-[var(--accent-light)] text-center">{image.caption}</figcaption>
+                            <figcaption class="mt-3 text-sm text-[var(--accent-light)] text-center">{image.caption}</figcaption>
                         </div>
                     )}
                 </figure>
@@ -51,7 +51,7 @@ const { title, image, text, actions } = Astro.props;
                             ))}
                         </div>
                     )}
-                    <div class="sketchy-separator w-full max-w-xs"></div>
+                    <div class="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-[var(--border-main)] to-transparent"></div>
                 </div>
             )}
         </section>
