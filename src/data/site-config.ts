@@ -30,7 +30,6 @@ const siteConfig: SiteConfig = {
     ],
     footerNavLinks: [],
     socialLinks: [
-        { text: 'GitHub', href: 'https://github.com/abs-digi' },
         { text: 'X', href: 'https://x.com/abs_digi' }
     ],
     hero: {
