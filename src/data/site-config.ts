@@ -13,13 +13,14 @@ const siteConfig: SiteConfig = {
     },
     title: "Ab's Website",
     subtitle: 'Website & Books',
-    description: 'Astro.js and Tailwind CSS theme for blog and portfolio by justgoodui.com',
+    description: 'A curated collection of notes, books, and resources on technology, development, and digital innovation.',
     image: {
         src: '/dante-preview.jpg', // This is fine if dante-preview.jpg is still in public/
         alt: 'Dante - Astro.js and Tailwind CSS theme'
     },
     headerNavLinks: [
         { text: 'Home', href: '/' },
+        { text: 'About', href: '/about' },
         { text: 'Garden', href: '/garden' },
         { text: 'Tags', href: '/tags' },
         { text: 'Books', href: '/books' },
@@ -28,11 +29,13 @@ const siteConfig: SiteConfig = {
     ],
     footerNavLinks: [],
     socialLinks: [
+        { text: 'GitHub', href: 'https://github.com/abs-digi' },
+        { text: 'LinkedIn', href: 'https://linkedin.com/in/abs-digi' },
         { text: 'X', href: 'https://x.com/abs_digi' }
     ],
     hero: {
         title: 'Hi There & Welcome to My Corner of the Web!',
-        text: "Welcome to my Website. 🌿 I plant ideas here, water them with code, and watch them grow.",
+        text: "Welcome to my website. I share my thoughts on technology, development, and continuous learning through curated notes and resources.",
         image: {
             // 3. USE THE IMPORTED VARIABLE HERE
             src: heroImage,

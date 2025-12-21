@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import siteConfig from '../data/site-config';
+
+const pageTitle = 'About';
+const pageDescription = 'Learn more about me, my work, and my interests in technology and development.';
+---
+
+<BaseLayout description={pageDescription} title={pageTitle}>
+    <div class="mx-auto max-w-3xl">
+        <h1 class="mb-8 font-serif text-4xl font-bold leading-tight sm:text-5xl">
+            About Me
+        </h1>
+
+        <div class="prose prose-lg max-w-none">
+            <section class="mb-12">
+                <h2>Welcome</h2>
+                <p>
+                    Hi, I'm Ab. Welcome to my corner of the web where I share my journey in technology,
+                    development, and continuous learning. This space serves as both a personal knowledge
+                    repository and a platform to share insights with others.
+                </p>
+            </section>
+
+            <section class="mb-12">
+                <h2>What I Do</h2>
+                <p>
+                    I'm passionate about software development, web technologies, and building meaningful
+                    digital experiences. This website serves as a digital garden where I cultivate ideas,
+                    document my learning, and share resources that I find valuable.
+                </p>
+                <p>
+                    My interests span across modern web development, programming best practices, and
+                    exploring new technologies that solve real-world problems.
+                </p>
+            </section>
+
+            <section class="mb-12">
+                <h2>This Website</h2>
+                <p>
+                    This site is built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>
+                    and <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind CSS</a>,
+                    combining performance with modern design principles.
+                </p>
+                <p>
+                    Here you'll find:
+                </p>
+                <ul>
+                    <li><strong>Garden Notes</strong> - My evolving thoughts and learnings on various topics</li>
+                    <li><strong>Book Collection</strong> - Books I've read and recommend</li>
+                    <li><strong>Resources</strong> - Curated links and references I find valuable</li>
+                </ul>
+            </section>
+
+            <section class="mb-12">
+                <h2>Get in Touch</h2>
+                <p>
+                    I'm always interested in connecting with fellow developers, learners, and curious minds.
+                    Feel free to reach out through any of the social links in the footer.
+                </p>
+                <div class="mt-6 flex flex-wrap gap-4">
+                    {siteConfig.socialLinks.map((link) => (
+                        <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 rounded-lg border border-[var(--border-main)] bg-[var(--bg-muted)] px-4 py-2 text-sm font-medium text-[var(--text-main)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                        >
+                            {link.text}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                            </svg>
+                        </a>
+                    ))}
+                </div>
+            </section>
+        </div>
+    </div>
+</BaseLayout>
