@@ -24,6 +24,7 @@ const siteConfig: SiteConfig = {
         { text: 'Garden', href: '/garden' },
         { text: 'Tags', href: '/tags' },
         { text: 'Books', href: '/books' },
+        { text: 'Guestbook', href: '/guestbook' },
         { text: 'Links', href: '/links' },
         { text: 'Favorites', href: '/favorites' },
     ],
