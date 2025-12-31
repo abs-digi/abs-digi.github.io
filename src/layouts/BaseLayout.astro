@@ -38,8 +38,8 @@ const { showHeader = true, ...head } = Astro.props;
         </button>
 
         <script>
-    document.addEventListener('astro:page-load', () => {
-        // 1. Existing Back-to-Top Logic
+    document.addEventListener('astro:page-load', async () => {
+        // 1. Back-to-Top Logic
         const toTopBtn = document.getElementById('to-top-btn');
         if (toTopBtn) {
             window.addEventListener('scroll', () => {

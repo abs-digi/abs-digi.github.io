@@ -1,5 +1,6 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import vue from '@astrojs/vue';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import siteConfig from './src/data/site-config';
@@ -16,5 +17,5 @@ export default defineConfig({
             }
         }
     },
-    integrations: [mdx(), sitemap()]
+    integrations: [mdx(), sitemap(), vue()]
 });
