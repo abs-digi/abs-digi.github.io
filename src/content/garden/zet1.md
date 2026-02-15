@@ -15,20 +15,23 @@ tags:
 <p>Sönke Ahrens is the primary reason you are reading about [[Zettelkasten]] and [[Digital Garden]]s today. He wrote the book "[[How to Take Smart Notes]]" in 2017 that started the snowball rolling for Digital Gardens. It processed Luhmann's difficult system of knowledge collection and wrote a manual for it so that many others could follow and understand it better using three steps. The [[Fleeting Note]], [[Literature Note]] and [[Permanent Note]].</p>
 
 <p>A digital garden lives in three stages, seedling, budding and evergreen. Originally Fleeting Notes, Permanent Notes and Literature Notes By: Sönke Ahrens. They are written with tools like Obsidian, Notion or Anytype and published using static site generators "SSG's" like Astro.js Jekyll, Hugo or Eleventy "11ty". A digital garden allows you to learn in public "online" by allowing you to record half-baked ideas that, with hope, blossom into evergreens. I think my website uses seedling, blossom and fruit, but it amounts to the same concept.</p>
-<p>Fleeting Notes (most temporary)</p>
-<p>Quick captures of random thoughts</p>
-<p>Lifespan: hours to 1-2 days max</p>
-<p>Action: Process daily → either trash or convert to literature/permanent notes</p>
+Fleeting Notes (most temporary)
+
+Quick captures of random thoughts
+Lifespan: hours to 1-2 days max
+Action: Process daily → either trash or convert to literature/permanent notes
 
 
-<p>Literature Notes (semi-permanent)</p>
-<p>Notes from external sources (books, articles, etc.)</p>
-<p>Lifespan: until processed</p>
-<p>Action: Process daily → distill into permanent notes in your own words</p>
+Literature Notes (semi-permanent)
+
+Notes from external sources (books, articles, etc.)
+Lifespan: until processed
+Action: Process daily → distill into permanent notes in your own words
 
 
-<p>Permanent Notes (forever)</p>
-<p>Your original thoughts and connections</p>
-<p>Lifespan: indefinite</p>
-<p>Action: Refine daily, link to other permanent notes</p>
+Permanent Notes (forever)
+
+Your original thoughts and connections
+Lifespan: indefinite
+Action: Refine daily, link to other permanent notes
 
