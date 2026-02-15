@@ -23,13 +23,6 @@ const pageDescription = 'Learn more about me, my work, and my interests in techn
             </section>
 
             <section class="mb-12">
-                <h2>What I Do</h2>
-                <p>
-                    Nothing.
-                </p>
-            </section>
-
-            <section class="mb-12">
                 <h2>This Website</h2>
                 <p>
                     This site is built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>
@@ -44,30 +37,6 @@ const pageDescription = 'Learn more about me, my work, and my interests in techn
                     <li><strong>Book Collection</strong> - Books I've read and recommend</li>
                     <li><strong>Resources</strong> - Curated links and references I find valuable</li>
                 </ul>
-            </section>
-
-            <section class="mb-12">
-                <h2>Get in Touch</h2>
-                <p>
-                    I'm always interested in connecting with fellow developers, learners, and curious minds.
-                    Feel free to reach out through any of the social links in the footer.
-                </p>
-                <div class="mt-6 flex flex-wrap gap-4">
-                    {siteConfig.socialLinks.map((link) => (
-                        <a
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center gap-2 rounded-lg border border-[var(--border-main)] bg-[var(--bg-muted)] px-4 py-2 text-sm font-medium text-[var(--text-main)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                        >
-                            {link.text}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-                            </svg>
-                        </a>
-                    ))}
-                </div>
             </section>
         </div>
     </div>
