@@ -19,9 +19,15 @@ const COINGECKO_IDS = {
   XRP: "ripple",
   DOGE: "dogecoin",
   ADA: "cardano",
+  LTC: "litecoin",
+  LINK: "chainlink",
+  AVAX: "avalanche-2",
+  DOT: "polkadot",
+  BCH: "bitcoin-cash",
+  SHIB: "shiba-inu",
 };
 
-const STOCKS = [
+const WATCH_STOCKS = [
   ["SPCX", "Space Exploration Technologies"],
   ["T", "AT&T"],
   ["SO", "Southern Company"],
@@ -36,14 +42,57 @@ const STOCKS = [
   ["ANT", "Anthropic"],
 ].map(([symbol, name]) => ({ symbol, name }));
 
-const CRYPTO = [
+const MARKET_STOCKS = [
+  ["AAPL", "Apple"],
+  ["MSFT", "Microsoft"],
+  ["AMZN", "Amazon"],
+  ["META", "Meta"],
+  ["TSLA", "Tesla"],
+  ["SPY", "S&P 500 ETF"],
+  ["QQQ", "Nasdaq 100 ETF"],
+  ["DIA", "Dow Jones ETF"],
+].map(([symbol, name]) => ({ symbol, name }));
+
+const WATCH_CRYPTO = [
   ["BTC", "Bitcoin"],
   ["ETH", "Ethereum"],
   ["SOL", "Solana"],
   ["XRP", "XRP"],
   ["DOGE", "Dogecoin"],
   ["ADA", "Cardano"],
-].map(([symbol, name]) => ({ symbol, name, product: symbol + "-USD", id: COINGECKO_IDS[symbol] }));
+].map(asCoin);
+
+const MARKET_CRYPTO = [
+  ["LTC", "Litecoin"],
+  ["LINK", "Chainlink"],
+  ["AVAX", "Avalanche"],
+  ["DOT", "Polkadot"],
+  ["BCH", "Bitcoin Cash"],
+  ["SHIB", "Shiba Inu"],
+].map(asCoin);
+
+function asCoin([symbol, name]) {
+  return { symbol, name, product: symbol + "-USD", id: COINGECKO_IDS[symbol] };
+}
+
+const STOCKS = [...WATCH_STOCKS, ...MARKET_STOCKS];
+const CRYPTO = [...WATCH_CRYPTO, ...MARKET_CRYPTO];
+const SECTIONS = [
+  {
+    label: "Watchlist",
+    stocks: WATCH_STOCKS,
+    crypto: WATCH_CRYPTO,
+    stockHost: "watch-stock-cards",
+    cryptoHost: "watch-crypto-cards",
+  },
+  {
+    label: "Market",
+    stocks: MARKET_STOCKS,
+    crypto: MARKET_CRYPTO,
+    stockHost: "market-stock-cards",
+    cryptoHost: "market-crypto-cards",
+  },
+];
 
 const byProduct = new Map(CRYPTO.map((coin) => [coin.product, coin]));
 const refs = new Map();
@@ -187,7 +236,7 @@ function buildCard(item) {
   card.dataset.symbol = item.symbol;
   card.dataset.dir = "flat";
   const head = el("div", "card-head");
-  head.append(el("h3", "symbol", item.symbol), el("p", "name", item.name));
+  head.append(el("p", "symbol", item.symbol), el("p", "name", item.name));
   const price = el("p", "price loading", "…");
   const delta = el("p", "delta flat");
   const amt = el("span", "amt");
@@ -208,31 +257,29 @@ function buildTapeItem(symbol) {
 }
 
 function buildBoard() {
-  const stockHost = document.getElementById("stock-cards");
-  const cryptoHost = document.getElementById("crypto-cards");
   const groups = [document.getElementById("tape-a"), document.getElementById("tape-b")];
-  for (const item of STOCKS) {
-    const ref = buildCard(item);
-    stockHost.append(ref.card);
-    refs.set(item.symbol, ref);
-  }
-  for (const item of CRYPTO) {
-    const ref = buildCard(item);
-    cryptoHost.append(ref.card);
-    refs.set(item.symbol, ref);
+  for (const section of SECTIONS) {
+    const stockHost = document.getElementById(section.stockHost);
+    const cryptoHost = document.getElementById(section.cryptoHost);
+    for (const item of section.stocks) {
+      const ref = buildCard(item);
+      stockHost.append(ref.card);
+      refs.set(item.symbol, ref);
+    }
+    for (const item of section.crypto) {
+      const ref = buildCard(item);
+      cryptoHost.append(ref.card);
+      refs.set(item.symbol, ref);
+    }
   }
   for (const group of groups) {
-    group.append(el("span", "tape-label", "Equities"));
-    for (const item of STOCKS) {
-      const tape = buildTapeItem(item.symbol);
-      group.append(tape.row);
-      refs.get(item.symbol).tapes.push(tape);
-    }
-    group.append(el("span", "tape-label", "Crypto"));
-    for (const item of CRYPTO) {
-      const tape = buildTapeItem(item.symbol);
-      group.append(tape.row);
-      refs.get(item.symbol).tapes.push(tape);
+    for (const section of SECTIONS) {
+      group.append(el("span", "tape-label", section.label));
+      for (const item of [...section.stocks, ...section.crypto]) {
+        const tape = buildTapeItem(item.symbol);
+        group.append(tape.row);
+        refs.get(item.symbol).tapes.push(tape);
+      }
     }
   }
 }
@@ -393,9 +440,14 @@ function applyCrypto(symbol, quote, feedName) {
     feed.crypto.note = "";
   } else if (!wsAlive) {
     feed.crypto.state = "poll";
-    feed.crypto.degraded = feedName === "coingecko";
-    feed.crypto.source = feedName === "coingecko" ? "CoinGecko" : "Coinbase";
     feed.crypto.note = "";
+    if (feedName === "coinbase-rest") {
+      feed.crypto.degraded = false;
+      feed.crypto.source = "Coinbase";
+    } else if (feed.crypto.source !== "Coinbase") {
+      feed.crypto.degraded = true;
+      feed.crypto.source = "CoinGecko";
+    }
   }
   feed.crypto.updatedAt = Date.now();
   paintQuote(refs.get(symbol), cryptoState[symbol]);
@@ -432,8 +484,16 @@ async function fetchCoinbaseStats() {
   return any;
 }
 
-async function fetchCoinGecko() {
-  const ids = CRYPTO.map((coin) => coin.id).join(",");
+function missingCoins() {
+  return CRYPTO.filter((coin) => {
+    const quote = cryptoState[coin.symbol];
+    return !quote || quote.unavailable || !(quote.price > 0);
+  });
+}
+
+async function fetchCoinGecko(coins) {
+  const list = coins && coins.length ? coins : CRYPTO;
+  const ids = list.map((coin) => coin.id).join(",");
   const url =
     "https://api.coingecko.com/api/v3/simple/price?ids=" +
     ids +
@@ -446,7 +506,7 @@ async function fetchCoinGecko() {
   if (!res.ok) return false;
   const data = await res.json();
   let any = false;
-  for (const coin of CRYPTO) {
+  for (const coin of list) {
     const quote = parseCoinGeckoRow(data[coin.id], coin.name);
     if (!quote) continue;
     any = true;
@@ -456,17 +516,26 @@ async function fetchCoinGecko() {
   return any;
 }
 
+async function fillCryptoGaps() {
+  const missing = missingCoins();
+  if (!missing.length) return false;
+  if (Date.now() - geckoAt < 25000 && missing.every((coin) => cryptoState[coin.symbol]?.feed === "coingecko")) {
+    return false;
+  }
+  return fetchCoinGecko(missing);
+}
+
 async function pollCrypto() {
   if (wsAlive) return;
   const ok = await fetchCoinbaseStats();
-  if (wsAlive || ok) return;
-  if (feed.crypto.source === "CoinGecko" && Date.now() - geckoAt < 25000) return;
-  const geckoOk = await fetchCoinGecko();
-  if (!geckoOk && !anyGood(cryptoState)) {
+  if (wsAlive) return;
+  const geckoOk = missingCoins().length ? await fillCryptoGaps() : false;
+  if ((ok || geckoOk) && feed.crypto.state !== "bad") return;
+  if (!anyGood(cryptoState)) {
     feed.crypto.state = "bad";
     feed.crypto.note = "Data unavailable";
     paintStatus("crypto");
-  } else if (!geckoOk && anyGood(cryptoState)) {
+  } else if (!ok && !geckoOk) {
     feed.crypto.state = "stale";
     feed.crypto.note = "Refresh failed";
     paintStatus("crypto");
@@ -600,7 +669,8 @@ function stopStockTimer() {
 }
 
 function armCryptoWatchdog() {
-  setTimeout(() => {
+  setTimeout(async () => {
+    await fillCryptoGaps();
     let good = 0;
     for (const coin of CRYPTO) {
       const quote = cryptoState[coin.symbol];
@@ -610,6 +680,9 @@ function armCryptoWatchdog() {
     if (good === 0 && feed.crypto.state !== "live") {
       feed.crypto.state = "bad";
       feed.crypto.note = "Data unavailable";
+      paintStatus("crypto");
+    } else if (good < CRYPTO.length && feed.crypto.state !== "loading") {
+      feed.crypto.note = CRYPTO.length - good + " unavailable";
       paintStatus("crypto");
     }
   }, 12000);
@@ -696,10 +769,7 @@ function init() {
   wireVisibility();
   fetchStocks();
   startStockTimer();
-  fetchCoinbaseStats().then((ok) => {
-    if (!ok && !wsAlive) return fetchCoinGecko();
-    return false;
-  });
+  fetchCoinbaseStats().then(() => fillCryptoGaps());
   connectWs();
   armCryptoWatchdog();
 }

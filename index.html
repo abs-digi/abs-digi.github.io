@@ -33,24 +33,42 @@
   </div>
   <main class="wrap">
     <p id="boot-error" class="banner" hidden>Quotes did not start. Reload the page.</p>
-    <div class="boards">
-      <section aria-labelledby="equities-heading">
-        <div class="section-head">
-          <h2 id="equities-heading">Equities</h2>
-          <p class="sub">Last price, change, and percent change. Refreshes about every 45 seconds.</p>
-        </div>
-        <p class="status"><span class="dot" id="stock-dot" data-state="wait"></span><span id="stock-status">Loading quotes…</span></p>
-        <div class="cards" id="stock-cards"></div>
-      </section>
-      <section aria-labelledby="crypto-heading">
-        <div class="section-head">
-          <h2 id="crypto-heading">Crypto</h2>
-          <p class="sub">Price and 24-hour change. Streams live from Coinbase, and polls if the stream drops.</p>
-        </div>
-        <p class="status"><span class="dot" id="crypto-dot" data-state="wait"></span><span id="crypto-status">Connecting to Coinbase…</span></p>
-        <div class="cards" id="crypto-cards"></div>
-      </section>
+    <div class="feeds">
+      <p class="status"><span class="dot" id="stock-dot" data-state="wait"></span><span id="stock-status">Loading quotes…</span></p>
+      <p class="status"><span class="dot" id="crypto-dot" data-state="wait"></span><span id="crypto-status">Connecting to Coinbase…</span></p>
     </div>
+    <section class="group" aria-labelledby="watch-heading">
+      <div class="section-head">
+        <h2 class="group-title" id="watch-heading">My watchlist</h2>
+        <p class="sub">The original names. Equities refresh about every 45 seconds. Crypto streams live.</p>
+      </div>
+      <div class="boards">
+        <div>
+          <h3 class="lane">Equities</h3>
+          <div class="cards" id="watch-stock-cards"></div>
+        </div>
+        <div>
+          <h3 class="lane">Crypto</h3>
+          <div class="cards" id="watch-crypto-cards"></div>
+        </div>
+      </div>
+    </section>
+    <section class="group" aria-labelledby="market-heading">
+      <div class="section-head">
+        <h2 class="group-title" id="market-heading">Market</h2>
+        <p class="sub">Widely followed equities, ETFs, and coins.</p>
+      </div>
+      <div class="boards">
+        <div>
+          <h3 class="lane">Equities and ETFs</h3>
+          <div class="cards" id="market-stock-cards"></div>
+        </div>
+        <div>
+          <h3 class="lane">Crypto</h3>
+          <div class="cards" id="market-crypto-cards"></div>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="wrap footer">
     <p>Equity quotes come from the CNBC public quote feed. If that feed fails, a Finnhub key saved in Settings is sent only to finnhub.io. Crypto quotes stream from the Coinbase Exchange ticker. If Coinbase is unreachable, the page polls Coinbase about every 8 seconds and then CoinGecko. A figure appears only after a feed returns it.</p>
