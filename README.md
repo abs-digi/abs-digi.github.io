@@ -4,8 +4,12 @@ Static market tape for GitHub Pages. `index.html` is served from the repository 
 
 ## What it shows
 
-- **Equities:** SPCX, T, SO, F, HPQ, AMD, ABT, WMT, GOOGL, MSI, NVDA, ANT — last price, change, and percent change (green up, red down).
-- **Crypto:** BTC, ETH, SOL, XRP, DOGE, ADA — price and 24-hour percent change.
+Two groups keep the original names separate from a broader set.
+
+- **My watchlist:** SPCX, T, SO, F, HPQ, AMD, ABT, WMT, GOOGL, MSI, NVDA, ANT, and BTC, ETH, SOL, XRP, DOGE, ADA.
+- **Market:** AAPL, MSFT, AMZN, META, TSLA, SPY, QQQ, DIA, and LTC, LINK, AVAX, DOT, BCH, SHIB.
+
+Equities show last price, change, and percent change (green up, red down). Crypto shows price and 24-hour percent change. Prices under a cent, including SHIB, keep enough decimal places that the quote does not round to zero.
 
 A scrolling tape sits above a card grid. The page prints a number only when a feed returns it. If a symbol is missing, that card says **Data unavailable**.
 

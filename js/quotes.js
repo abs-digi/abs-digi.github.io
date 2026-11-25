@@ -119,7 +119,14 @@ export function directionOf(change, pct) {
 export function formatPrice(n) {
   if (!Number.isFinite(n)) return "—";
   const abs = Math.abs(n);
-  const max = abs >= 1 || abs === 0 ? 2 : abs < 0.0001 ? 8 : 6;
+  if (abs === 0) return "0.00";
+  let max = 2;
+  if (abs < 1) {
+    // Four significant digits past the leading zeros, so SHIB-sized prices
+    // and their tiny changes do not collapse to 0.00.
+    const places = Math.ceil(-Math.log10(abs)) + 3;
+    max = Math.min(12, Math.max(abs < 0.0001 ? 8 : 6, places));
+  }
   return abs.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: max });
 }
 

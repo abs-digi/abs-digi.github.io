@@ -62,6 +62,44 @@ h1 {
 h2 { margin: 0; font-size: 1.15rem; font-weight: 600; }
 h3 { margin: 0; font-size: 1.02rem; letter-spacing: 0.04em; }
 
+.symbol {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+
+.group { margin-top: 22px; }
+
+.group + .group {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.group-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  letter-spacing: -0.03em;
+}
+
+.lane {
+  margin: 0 0 10px;
+  color: var(--amber);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.feeds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+  margin-top: 16px;
+}
+
+.feeds .status { margin: 0; }
+
 .top-actions {
   display: flex;
   align-items: center;
@@ -128,7 +166,7 @@ input:focus-visible {
 
 .tape-track { display: flex; width: max-content; }
 
-.tape-track.run { animation: ticker 75s linear infinite; }
+.tape-track.run { animation: ticker 110s linear infinite; }
 
 .tape:hover .tape-track,
 .tape:focus-within .tape-track { animation-play-state: paused; }
@@ -378,7 +416,7 @@ input[type="text"] {
   .wrap { width: min(1120px, calc(100% - 20px)); }
   .cards { grid-template-columns: 1fr; }
   .price { font-size: 1.7rem; }
-  .tape-track.run { animation-duration: 55s; }
+  .tape-track.run { animation-duration: 80s; }
 }
 
 @media (prefers-reduced-motion: reduce) {
